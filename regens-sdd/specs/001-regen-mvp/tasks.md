@@ -21,7 +21,7 @@ el orden indicado y marcarse únicamente cuando se cumpla su criterio verificabl
   - **RF:** RF-3, RF-4, RF-5, RF-6, RF-7
   - **Hecho cuando:** El resultado representa el jugador activo, los estados de coincidencia de fecha, nacionalidad y posición, el estado de posible regen y el mensaje en español.
 
-- [ ] **T5. Definir errores y puertos de aplicación**
+- [x] **T5. Definir errores y puertos de aplicación**
   - **RF:** RF-1 a RF-7
   - **Hecho cuando:** Existen contratos para actualizar el catálogo, consultar jugadores y comunicar errores sin importar FastAPI, Angular ni la persistencia.
 
