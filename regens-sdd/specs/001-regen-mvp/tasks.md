@@ -17,7 +17,7 @@ el orden indicado y marcarse únicamente cuando se cumpla su criterio verificabl
   - **RF:** RF-1, RF-2
   - **Hecho cuando:** El modelo contempla `id`, `name`, `birth_date`, `nationality`, `position`, `overall`, `age` y `season`, con sus restricciones documentadas.
 
-- [ ] **T4. Definir el modelo de resultado de coincidencia**
+- [x] **T4. Definir el modelo de resultado de coincidencia**
   - **RF:** RF-3, RF-4, RF-5, RF-6, RF-7
   - **Hecho cuando:** El resultado representa el jugador activo, los estados de coincidencia de fecha, nacionalidad y posición, el estado de posible regen y el mensaje en español.
 
