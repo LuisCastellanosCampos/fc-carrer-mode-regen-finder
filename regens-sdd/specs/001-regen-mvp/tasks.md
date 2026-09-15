@@ -5,11 +5,11 @@ el orden indicado y marcarse únicamente cuando se cumpla su criterio verificabl
 
 ## Decisiones y base del dominio
 
-- [ ] **T1. Resolver las dudas abiertas de la spec**
+- [x] **T1. Resolver las dudas abiertas de la spec**
   - **RF:** RF-5, RF-6
   - **Hecho cuando:** La spec indica si la media mínima de 85 se aplica al candidato concreto y define el desempate completo posterior a media y edad.
 
-- [ ] **T2. Preparar la estructura del monorepo**
+- [x] **T2. Preparar la estructura del monorepo**
   - **RF:** RF-1 a RF-7
   - **Hecho cuando:** Existen las áreas separadas para dominio, aplicación, adaptadores, API, frontend y tests, sin dependencias del dominio hacia la interfaz o la persistencia.
 

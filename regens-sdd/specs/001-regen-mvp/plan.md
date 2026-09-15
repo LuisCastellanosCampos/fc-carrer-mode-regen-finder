@@ -147,9 +147,9 @@ function findPossibleRegens(players, birthDate, nationality, position?):
 ```
 
 La comparación no será aproximada: una fecha distinta o una nacionalidad
-distinta excluye al jugador. El tercer criterio `id` solo garantiza un resultado
-determinista mientras la duda sobre empates completos siga abierta; deberá
-validarse como decisión definitiva.
+distinta excluye al jugador. El filtro `overall >= 85` se aplica a cada
+candidato concreto. El tercer criterio `id` ascendente resuelve de forma
+determinista cualquier empate restante entre media y edad.
 
 **Cubre:** RF-3, RF-4, RF-5, RF-6 y RF-7.
 
@@ -244,12 +244,11 @@ Respuestas:
 | Nacionalidad normalizada para comparar | Tolera diferencias de mayúsculas y espacios sin convertir la coincidencia en aproximada. | Comparación textual sin normalización, que generaría falsos negativos. |
 | Posición como indicio, no filtro obligatorio | Respeta RF-4 y permite consultas cuando el usuario no conoce la posición. | Hacerla obligatoria, que excluiría coincidencias válidas. |
 | Media mínima de 85 | Prioriza candidatos destacados y mantiene RF-5. | Mostrar cualquier media, que ampliaría resultados fuera del MVP. |
-| Desempate por edad y después ID provisional | Produce resultados ordenados y repetibles. | Orden no determinista, que cambiaría la respuesta con los mismos datos. |
+| Desempate por edad y después ID ascendente | Produce resultados ordenados y repetibles. | Orden no determinista, que cambiaría la respuesta con los mismos datos. |
 | Cliente Angular consumiendo REST | Mantiene la interfaz separada y permite reutilizar el contrato desde otros clientes. | Duplicar las reglas en frontend, con riesgo de resultados distintos al backend. |
 
-Las dos dudas abiertas de la spec deben resolverse antes de cerrar el contrato:
-confirmar el alcance del umbral 85 para candidatos concretos y aprobar el ID
-como tercer criterio de desempate.
+Las decisiones de T1 quedan incorporadas al contrato: el umbral `overall >= 85`
+se aplica a cada candidato y el desempate completo termina con `id` ascendente.
 
 ## 7. Estrategia de tests
 
