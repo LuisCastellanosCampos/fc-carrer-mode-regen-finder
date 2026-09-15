@@ -87,8 +87,9 @@ coincide, sin invalidar la consulta cuando no se proporcione o no coincida.
 
 ### RF-5. Filtrar por media mínima
 
-Los resultados deberán incluir únicamente jugadores cuya media sea igual o
-superior a 85.
+El filtro de media mínima se aplicará a cada candidato concreto. Los
+resultados deberán incluir únicamente jugadores cuya media sea igual o
+superior a 85; un candidato con media inferior a 85 no se mostrará.
 
 **Criterios de aceptación (EARS):**
 
@@ -102,7 +103,8 @@ superior a 85.
 Si existen varios jugadores activos que coinciden con la fecha de nacimiento y
 la nacionalidad, el sistema deberá ordenar las posibles coincidencias por
 media descendente. Si dos o más jugadores tienen la misma media, deberá
-mostrar primero al de mayor edad.
+mostrar primero al de mayor edad. Si también coinciden la media y la edad, se
+ordenarán por `id` ascendente para resolver el empate de forma determinista.
 
 **Criterios de aceptación (EARS):**
 
@@ -173,9 +175,9 @@ cumplan la fecha, la nacionalidad y la media mínima solicitadas.
 - Las entradas inválidas y las búsquedas sin resultados generan mensajes claros.
 - Todos los requisitos funcionales tienen pruebas automatizadas asociadas.
 
-## Dudas abiertas
+## Decisiones de T1
 
-- [NECESITA ACLARACIÓN] Confirmar si el filtro de media mínima 85 también debe
-  aplicarse cuando el usuario consulta un candidato concreto.
-- [NECESITA ACLARACIÓN] Definir cómo se resolverá un empate completo cuando dos
-  jugadores tengan la misma media y la misma edad.
+- La media mínima de 85 se aplica a cada candidato concreto de la consulta.
+  Los candidatos con `overall < 85` se excluyen y los candidatos con
+  `overall = 85` se incluyen.
+- Un empate completo de media y edad se resuelve por `id` ascendente.
