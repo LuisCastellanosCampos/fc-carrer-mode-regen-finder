@@ -13,7 +13,7 @@ el orden indicado y marcarse únicamente cuando se cumpla su criterio verificabl
   - **RF:** RF-1 a RF-7
   - **Hecho cuando:** Existen las áreas separadas para dominio, aplicación, adaptadores, API, frontend y tests, sin dependencias del dominio hacia la interfaz o la persistencia.
 
-- [ ] **T3. Definir el modelo de jugador activo**
+- [x] **T3. Definir el modelo de jugador activo**
   - **RF:** RF-1, RF-2
   - **Hecho cuando:** El modelo contempla `id`, `name`, `birth_date`, `nationality`, `position`, `overall`, `age` y `season`, con sus restricciones documentadas.
 
