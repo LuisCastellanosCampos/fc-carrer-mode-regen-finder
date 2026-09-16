@@ -31,7 +31,7 @@ el orden indicado y marcarse únicamente cuando se cumpla su criterio verificabl
   - **RF:** RF-2
   - **Hecho cuando:** Se rechazan ID, nombre, fecha, nacionalidad, media o edad ausentes o inválidos, y los errores identifican el campo en español.
 
-- [ ] **T7. Implementar la validación de colecciones**
+- [x] **T7. Implementar la validación de colecciones**
   - **RF:** RF-1, RF-2
   - **Hecho cuando:** Se rechazan colecciones con IDs duplicados y se valida toda la colección antes de modificar el catálogo.
 
