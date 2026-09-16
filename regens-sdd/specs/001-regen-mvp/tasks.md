@@ -27,7 +27,7 @@ el orden indicado y marcarse únicamente cuando se cumpla su criterio verificabl
 
 ## Catálogo anual
 
-- [ ] **T6. Implementar la validación de jugadores**
+- [x] **T6. Implementar la validación de jugadores**
   - **RF:** RF-2
   - **Hecho cuando:** Se rechazan ID, nombre, fecha, nacionalidad, media o edad ausentes o inválidos, y los errores identifican el campo en español.
 
