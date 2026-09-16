@@ -35,7 +35,7 @@ el orden indicado y marcarse únicamente cuando se cumpla su criterio verificabl
   - **RF:** RF-1, RF-2
   - **Hecho cuando:** Se rechazan colecciones con IDs duplicados y se valida toda la colección antes de modificar el catálogo.
 
-- [ ] **T8. Implementar el adaptador de persistencia del catálogo**
+- [x] **T8. Implementar el adaptador de persistencia del catálogo**
   - **RF:** RF-1, RF-2, RF-7
   - **Hecho cuando:** El catálogo puede leerse y reemplazarse mediante el puerto definido, sin exponer detalles de persistencia al dominio.
 
