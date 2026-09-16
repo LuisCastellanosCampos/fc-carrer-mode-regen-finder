@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from datetime import date
 from numbers import Real
+from unicodedata import normalize
 
 from BACKEND.domain.exceptions.errors import ValidationError
 
@@ -19,6 +20,9 @@ class Player:
     season: str | None = None
 
     def __post_init__(self) -> None:
+        if isinstance(self.id, str):
+            object.__setattr__(self, "id", normalize("NFKC", self.id).strip().casefold())
+
         self._validate_required_text(self.id, "id")
         self._validate_required_text(self.name, "nombre")
         self._validate_required_text(self.nationality, "nacionalidad")

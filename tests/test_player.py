@@ -66,6 +66,12 @@ def test_player_rejects_invalid_birth_date() -> None:
         valid_player(birth_date="1998-04-12")
 
 
+def test_player_normalizes_id_to_a_canonical_value() -> None:
+    player = valid_player(id="  Ｐ-００１  ")
+
+    assert player.id == "p-001"
+
+
 @pytest.mark.parametrize(
     ("field", "message_fragment"),
     [
