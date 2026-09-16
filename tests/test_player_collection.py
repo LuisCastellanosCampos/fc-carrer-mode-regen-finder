@@ -35,6 +35,13 @@ def test_validate_player_collection_rejects_duplicate_ids() -> None:
         validate_player_collection(players)
 
 
+def test_validate_player_collection_rejects_equivalent_normalized_ids() -> None:
+    players = (valid_player("p-1"), valid_player(" P-１ "))
+
+    with pytest.raises(ValidationError, match="ID duplicado"):
+        validate_player_collection(players)
+
+
 def test_validate_player_collection_rejects_non_player_entries() -> None:
     with pytest.raises(ValidationError, match="jugador válido"):
         validate_player_collection((valid_player("p-1"), object()))
