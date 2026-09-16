@@ -39,7 +39,7 @@ el orden indicado y marcarse únicamente cuando se cumpla su criterio verificabl
   - **RF:** RF-1, RF-2, RF-7
   - **Hecho cuando:** El catálogo puede leerse y reemplazarse mediante el puerto definido, sin exponer detalles de persistencia al dominio.
 
-- [ ] **T9. Implementar la actualización anual mediante upsert**
+- [x] **T9. Implementar la actualización anual mediante upsert**
   - **RF:** RF-1, RF-2
   - **Hecho cuando:** Los IDs nuevos se insertan, los existentes se actualizan y una colección inválida no deja ningún cambio aplicado.
 
