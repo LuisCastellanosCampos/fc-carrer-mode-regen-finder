@@ -43,7 +43,7 @@ el orden indicado y marcarse únicamente cuando se cumpla su criterio verificabl
   - **RF:** RF-1, RF-2
   - **Hecho cuando:** Los IDs nuevos se insertan, los existentes se actualizan y una colección inválida no deja ningún cambio aplicado.
 
-- [ ] **T10. Probar la actualización anual del catálogo**
+- [x] **T10. Probar la actualización anual del catálogo**
   - **RF:** RF-1, RF-2
   - **Hecho cuando:** Los tests cubren carga inicial, inserción, actualización por ID, duplicados, datos inválidos y atomicidad ante errores.
 
