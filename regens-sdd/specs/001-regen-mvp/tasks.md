@@ -73,7 +73,7 @@ el orden indicado y marcarse únicamente cuando se cumpla su criterio verificabl
   - **RF:** RF-7
   - **Hecho cuando:** Una consulta sin resultados devuelve una lista vacía y un mensaje informativo en español.
 
-- [ ] **T17. Probar las reglas de detección**
+- [x] **T17. Probar las reglas de detección**
   - **RF:** RF-3, RF-4, RF-5, RF-6, RF-7
   - **Hecho cuando:** Los tests cubren coincidencia exacta, coincidencia parcial, posición ausente o discrepante, umbral 85, ordenación, empates y lista vacía.
 
