@@ -57,11 +57,11 @@ el orden indicado y marcarse únicamente cuando se cumpla su criterio verificabl
   - **RF:** RF-3
   - **Hecho cuando:** Solo se consideran posibles coincidencias los jugadores activos que coinciden en ambos datos; las coincidencias parciales quedan excluidas.
 
-- [ ] **T13. Implementar la posición opcional**
+- [x] **T13. Implementar la posición opcional**
   - **RF:** RF-4
   - **Hecho cuando:** La consulta funciona sin posición, informa de coincidencia cuando se proporciona y conserva el resultado aunque la posición difiera.
 
-- [ ] **T14. Implementar el filtro de media mínima**
+- [x] **T14. Implementar el filtro de media mínima**
   - **RF:** RF-5
   - **Hecho cuando:** Los resultados con media inferior a 85 se excluyen y un jugador con media exactamente 85 se incluye, conforme a la decisión de T1.
 

@@ -17,18 +17,41 @@ class FindRegensService:
             birth_date_matches = player.birth_date == query.birth_date
             nationality_matches = self._normalize(player.nationality) == query.nationality
 
-            if birth_date_matches and nationality_matches:
+            if (
+                birth_date_matches
+                and nationality_matches
+                and player.overall >= 85
+            ):
+                position_matches = None
+                if query.position is not None:
+                    position_matches = (
+                        self._normalize(player.position) == query.position
+                    )
+
+                if position_matches is True:
+                    message = (
+                        "Posible regen: coinciden fecha de nacimiento, "
+                        "nacionalidad y posición."
+                    )
+                elif position_matches is False:
+                    message = (
+                        "Posible regen: coinciden fecha de nacimiento y "
+                        "nacionalidad, pero no la posición."
+                    )
+                else:
+                    message = (
+                        "Posible regen: coinciden fecha de nacimiento "
+                        "y nacionalidad."
+                    )
+
                 matches.append(
                     RegenMatch(
                         player=player,
                         birth_date_matches=True,
                         nationality_matches=True,
-                        position_matches=None,
+                        position_matches=position_matches,
                         is_possible_regen=True,
-                        message=(
-                            "Posible regen: coinciden fecha de nacimiento "
-                            "y nacionalidad."
-                        ),
+                        message=message,
                     )
                 )
 

@@ -11,14 +11,16 @@ def player(
     *,
     birth_date: date = date(1998, 4, 12),
     nationality: str = "Spain",
+    position: str = "ST",
+    overall: int = 85,
 ) -> Player:
     return Player(
         id=player_id,
         name="Alejandro Ruiz",
         birth_date=birth_date,
         nationality=nationality,
-        position="ST",
-        overall=80,
+        position=position,
+        overall=overall,
         age=24,
         season="2026",
     )
@@ -55,3 +57,61 @@ def test_find_regens_excludes_partial_matches() -> None:
     )
 
     assert matches == ()
+
+
+def test_find_regens_without_position_keeps_position_match_unknown() -> None:
+    catalog = InMemoryCatalog()
+    catalog.replace_players((player("p-exact"),))
+
+    matches = FindRegensService(catalog).execute(
+        FindRegensQuery(date(1998, 4, 12), "Spain")
+    )
+
+    assert matches[0].position_matches is None
+    assert matches[0].message == (
+        "Posible regen: coinciden fecha de nacimiento y nacionalidad."
+    )
+
+
+def test_find_regens_reports_position_match_without_excluding_difference() -> None:
+    catalog = InMemoryCatalog()
+    catalog.replace_players(
+        (
+            player("p-same-position", position="ST"),
+            player("p-different-position", position="CM"),
+        )
+    )
+
+    matches = FindRegensService(catalog).execute(
+        FindRegensQuery(date(1998, 4, 12), "Spain", " st ")
+    )
+
+    assert [match.player.id for match in matches] == [
+        "p-same-position",
+        "p-different-position",
+    ]
+    assert [match.position_matches for match in matches] == [True, False]
+    assert matches[0].message == (
+        "Posible regen: coinciden fecha de nacimiento, nacionalidad y posición."
+    )
+    assert matches[1].message == (
+        "Posible regen: coinciden fecha de nacimiento y nacionalidad, "
+        "pero no la posición."
+    )
+
+
+def test_find_regens_excludes_overall_below_85_and_includes_85() -> None:
+    catalog = InMemoryCatalog()
+    catalog.replace_players(
+        (
+            player("p-below-threshold", overall=84),
+            player("p-at-threshold", overall=85),
+        )
+    )
+
+    matches = FindRegensService(catalog).execute(
+        FindRegensQuery(date(1998, 4, 12), "Spain")
+    )
+
+    assert [match.player.id for match in matches] == ["p-at-threshold"]
+    assert matches[0].player.overall == 85
