@@ -13,6 +13,7 @@ def player(
     nationality: str = "Spain",
     position: str = "ST",
     overall: int = 85,
+    age: int = 24,
 ) -> Player:
     return Player(
         id=player_id,
@@ -21,7 +22,7 @@ def player(
         nationality=nationality,
         position=position,
         overall=overall,
-        age=24,
+        age=age,
         season="2026",
     )
 
@@ -87,14 +88,14 @@ def test_find_regens_reports_position_match_without_excluding_difference() -> No
     )
 
     assert [match.player.id for match in matches] == [
-        "p-same-position",
         "p-different-position",
+        "p-same-position",
     ]
-    assert [match.position_matches for match in matches] == [True, False]
-    assert matches[0].message == (
+    assert [match.position_matches for match in matches] == [False, True]
+    assert matches[1].message == (
         "Posible regen: coinciden fecha de nacimiento, nacionalidad y posición."
     )
-    assert matches[1].message == (
+    assert matches[0].message == (
         "Posible regen: coinciden fecha de nacimiento y nacionalidad, "
         "pero no la posición."
     )
@@ -115,3 +116,28 @@ def test_find_regens_excludes_overall_below_85_and_includes_85() -> None:
 
     assert [match.player.id for match in matches] == ["p-at-threshold"]
     assert matches[0].player.overall == 85
+
+
+def test_find_regens_orders_by_overall_age_then_id() -> None:
+    catalog = InMemoryCatalog()
+    catalog.replace_players(
+        (
+            player("p-z", overall=90, age=30),
+            player("p-b", overall=85, age=24),
+            player("p-a", overall=85, age=24),
+            player("p-younger", overall=90, age=25),
+            player("p-older", overall=90, age=31),
+        )
+    )
+
+    matches = FindRegensService(catalog).execute(
+        FindRegensQuery(date(1998, 4, 12), "Spain")
+    )
+
+    assert [match.player.id for match in matches] == [
+        "p-older",
+        "p-z",
+        "p-younger",
+        "p-a",
+        "p-b",
+    ]

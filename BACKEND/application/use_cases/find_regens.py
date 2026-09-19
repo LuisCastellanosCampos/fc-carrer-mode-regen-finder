@@ -55,6 +55,13 @@ class FindRegensService:
                     )
                 )
 
+        matches.sort(
+            key=lambda match: (
+                -match.player.overall,
+                -match.player.age,
+                match.player.id,
+            )
+        )
         return tuple(matches)
 
     @staticmethod
