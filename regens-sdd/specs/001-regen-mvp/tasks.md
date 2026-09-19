@@ -53,7 +53,7 @@ el orden indicado y marcarse únicamente cuando se cumpla su criterio verificabl
   - **RF:** RF-3, RF-4
   - **Hecho cuando:** Las fechas se validan como fechas exactas, la nacionalidad y la posición se normalizan para comparar, y los valores vacíos se rechazan.
 
-- [ ] **T12. Implementar el cruce exacto por fecha y nacionalidad**
+- [x] **T12. Implementar el cruce exacto por fecha y nacionalidad**
   - **RF:** RF-3
   - **Hecho cuando:** Solo se consideran posibles coincidencias los jugadores activos que coinciden en ambos datos; las coincidencias parciales quedan excluidas.
 
