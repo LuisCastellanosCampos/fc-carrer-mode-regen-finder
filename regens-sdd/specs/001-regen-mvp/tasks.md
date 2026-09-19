@@ -65,7 +65,7 @@ el orden indicado y marcarse únicamente cuando se cumpla su criterio verificabl
   - **RF:** RF-5
   - **Hecho cuando:** Los resultados con media inferior a 85 se excluyen y un jugador con media exactamente 85 se incluye, conforme a la decisión de T1.
 
-- [ ] **T15. Implementar la ordenación de coincidencias**
+- [x] **T15. Implementar la ordenación de coincidencias**
   - **RF:** RF-6
   - **Hecho cuando:** Las coincidencias se ordenan por media descendente, edad descendente y el criterio final aprobado en T1.
 
