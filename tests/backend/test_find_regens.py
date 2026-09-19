@@ -152,3 +152,24 @@ def test_find_regens_orders_by_overall_age_then_id() -> None:
         "p-a",
         "p-b",
     ]
+
+
+def test_find_regens_applies_all_detection_rules_together() -> None:
+    catalog = InMemoryCatalog()
+    catalog.replace_players(
+        (
+            player("p-valid", nationality="  EsPaÑa  ", overall=85),
+            player("p-low-overall", overall=84),
+            player("p-wrong-date", birth_date=date(1997, 4, 12), overall=95),
+            player("p-wrong-nationality", nationality="France", overall=95),
+        )
+    )
+
+    matches = FindRegensService(catalog).execute(
+        FindRegensQuery(date(1998, 4, 12), " españa ", "ST")
+    )
+
+    assert [match.player.id for match in matches] == ["p-valid"]
+    assert matches[0].position_matches is True
+    assert matches[0].is_possible_regen is True
+    assert matches.message is None
