@@ -49,7 +49,7 @@ el orden indicado y marcarse únicamente cuando se cumpla su criterio verificabl
 
 ## Detección de posibles regens
 
-- [ ] **T11. Implementar la normalización de datos de consulta**
+- [x] **T11. Implementar la normalización de datos de consulta**
   - **RF:** RF-3, RF-4
   - **Hecho cuando:** Las fechas se validan como fechas exactas, la nacionalidad y la posición se normalizan para comparar, y los valores vacíos se rechazan.
 
