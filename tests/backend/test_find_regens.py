@@ -60,6 +60,17 @@ def test_find_regens_excludes_partial_matches() -> None:
     assert matches == ()
 
 
+def test_find_regens_without_matches_returns_empty_list_and_message() -> None:
+    catalog = InMemoryCatalog()
+    catalog.replace_players((player("p-other", nationality="France"),))
+    service = FindRegensService(catalog)
+
+    matches = service.execute(FindRegensQuery(date(1998, 4, 12), "Spain"))
+
+    assert matches == ()
+    assert matches.message == "No se encontraron posibles regens."
+
+
 def test_find_regens_without_position_keeps_position_match_unknown() -> None:
     catalog = InMemoryCatalog()
     catalog.replace_players((player("p-exact"),))

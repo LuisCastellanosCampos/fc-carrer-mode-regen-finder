@@ -21,6 +21,7 @@ def test_application_use_case_ports_cover_update_and_query() -> None:
     from BACKEND.application.ports.use_cases import (
         CatalogUpdateResult,
         FindRegensQuery,
+        FindRegensResult,
         FindRegensUseCase,
         UpdateCatalogCommand,
         UpdateCatalogUseCase,
@@ -39,7 +40,7 @@ def test_application_use_case_ports_cover_update_and_query() -> None:
         "inserted",
         "updated",
     }
-    assert get_type_hints(FindRegensUseCase.execute)["return"] == tuple[RegenMatch, ...]
+    assert get_type_hints(FindRegensUseCase.execute)["return"] is FindRegensResult
 
 
 def test_domain_errors_communicate_spanish_messages() -> None:

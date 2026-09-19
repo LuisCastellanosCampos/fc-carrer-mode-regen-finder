@@ -1,17 +1,19 @@
 from unicodedata import normalize
 
 from BACKEND.application.ports.catalog import CatalogPort
-from BACKEND.application.ports.use_cases import FindRegensQuery
+from BACKEND.application.ports.use_cases import FindRegensQuery, FindRegensResult
 from BACKEND.domain.entities.regen_match import RegenMatch
 
 
 class FindRegensService:
     """Encuentra jugadores que coinciden exactamente en fecha y nacionalidad."""
 
+    _no_matches_message = "No se encontraron posibles regens."
+
     def __init__(self, catalog: CatalogPort) -> None:
         self._catalog = catalog
 
-    def execute(self, query: FindRegensQuery) -> tuple[RegenMatch, ...]:
+    def execute(self, query: FindRegensQuery) -> FindRegensResult:
         matches: list[RegenMatch] = []
         for player in self._catalog.read_players():
             birth_date_matches = player.birth_date == query.birth_date
@@ -62,7 +64,8 @@ class FindRegensService:
                 match.player.id,
             )
         )
-        return tuple(matches)
+        message = self._no_matches_message if not matches else None
+        return FindRegensResult(tuple(matches), message)
 
     @staticmethod
     def _normalize(value: str) -> str:

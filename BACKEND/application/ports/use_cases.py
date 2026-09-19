@@ -21,6 +21,19 @@ class CatalogUpdateResult:
     updated: int
 
 
+class FindRegensResult(tuple[RegenMatch, ...]):
+    message: str | None
+
+    def __new__(
+        cls,
+        matches: tuple[RegenMatch, ...],
+        message: str | None = None,
+    ) -> "FindRegensResult":
+        result = super().__new__(cls, matches)
+        result.message = message
+        return result
+
+
 @dataclass(frozen=True, slots=True)
 class FindRegensQuery:
     birth_date: date
@@ -66,5 +79,5 @@ class UpdateCatalogUseCase(Protocol):
 class FindRegensUseCase(Protocol):
     """Puerto de entrada para consultar posibles regens."""
 
-    def execute(self, query: FindRegensQuery) -> tuple[RegenMatch, ...]:
+    def execute(self, query: FindRegensQuery) -> FindRegensResult:
         ...

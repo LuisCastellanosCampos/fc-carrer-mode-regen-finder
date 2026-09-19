@@ -69,7 +69,7 @@ el orden indicado y marcarse únicamente cuando se cumpla su criterio verificabl
   - **RF:** RF-6
   - **Hecho cuando:** Las coincidencias se ordenan por media descendente, edad descendente y el criterio final aprobado en T1.
 
-- [ ] **T16. Implementar el caso sin coincidencias**
+- [x] **T16. Implementar el caso sin coincidencias**
   - **RF:** RF-7
   - **Hecho cuando:** Una consulta sin resultados devuelve una lista vacía y un mensaje informativo en español.
 
