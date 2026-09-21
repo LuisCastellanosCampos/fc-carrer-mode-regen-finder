@@ -34,6 +34,23 @@ Para actualizar el catálogo anual, realiza una petición `PUT` a
 `PUT` request to `http://127.0.0.1:8000/api/v1/players/catalog` with the
 `Content-Type: application/json` header.
 
+Body de la petición: | Request body:
+
+```json
+{
+	"season": "2026",
+	"players": [
+		{
+			"id": "p-1042",
+			"name": "Alejandro Ruiz",
+			"birth_date": "1998-04-12",
+			"nationality": "Spain",
+			"position": "ST",
+			"overall": 87,
+			"age": 24
+		}
+	]
+}
 ```
 
 Respuesta esperada: | Expected response:
