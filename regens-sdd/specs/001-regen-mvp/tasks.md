@@ -79,7 +79,7 @@ el orden indicado y marcarse únicamente cuando se cumpla su criterio verificabl
 
 ## API REST
 
-- [ ] **T18. Implementar el endpoint de actualización anual**
+- [x] **T18. Implementar el endpoint de actualización anual**
   - **RF:** RF-1, RF-2
   - **Hecho cuando:** `PUT /api/v1/players/catalog` acepta el payload definido, ejecuta el caso de uso y devuelve el resumen de inserciones y actualizaciones.
 
