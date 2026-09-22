@@ -83,7 +83,7 @@ el orden indicado y marcarse únicamente cuando se cumpla su criterio verificabl
   - **RF:** RF-1, RF-2
   - **Hecho cuando:** `PUT /api/v1/players/catalog` acepta el payload definido, ejecuta el caso de uso y devuelve el resumen de inserciones y actualizaciones.
 
-- [ ] **T19. Implementar el endpoint de búsqueda**
+- [x] **T19. Implementar el endpoint de búsqueda**
   - **RF:** RF-3, RF-4, RF-5, RF-6, RF-7
   - **Hecho cuando:** `GET /api/v1/regens` acepta fecha, nacionalidad y posición opcional, y devuelve coincidencias ordenadas o lista vacía con mensaje.
 
