@@ -63,6 +63,88 @@ Respuesta esperada: | Expected response:
 }
 ```
 
+## Búsqueda de posibles regens | Possible Regen Search
+
+Para buscar coincidencias, realiza una petición `GET` a
+`http://127.0.0.1:8000/api/v1/regens`. Los parámetros `birth_date` y
+`nationality` son obligatorios; `position` es opcional. | To search for
+matches, send a `GET` request to the same URL. `birth_date` and `nationality`
+are required; `position` is optional.
+
+Ejemplo con posición: | Example with position:
+
+```text
+GET /api/v1/regens?birth_date=1998-04-12&nationality=Spain&position=ST
+```
+
+Respuesta con coincidencias: | Response with matches:
+
+```json
+{
+	"query": {
+		"birth_date": "1998-04-12",
+		"nationality": "Spain",
+		"position": "ST"
+	},
+	"matches": [
+		{
+			"player": {
+				"id": "p-1042",
+				"name": "Alejandro Ruiz",
+				"birth_date": "1998-04-12",
+				"nationality": "Spain",
+				"position": "ST",
+				"overall": 87,
+				"age": 24,
+				"season": "2026"
+			},
+			"match": {
+				"birth_date": true,
+				"nationality": true,
+				"position": true,
+				"is_possible_regen": true,
+				"message": "Posible regen: coinciden fecha de nacimiento, nacionalidad y posición."
+			}
+		}
+	],
+	"message": null
+}
+```
+
+Si no hay coincidencias, la respuesta mantiene `200 OK` y devuelve una lista
+vacía con un mensaje informativo: | When there are no matches, the response
+is still `200 OK` and includes an empty list with an informative message:
+
+```json
+{
+	"query": {
+		"birth_date": "1998-04-12",
+		"nationality": "Spain",
+		"position": null
+	},
+	"matches": [],
+	"message": "No se encontraron posibles regens."
+}
+```
+
+### Códigos HTTP | HTTP Status Codes
+
+- `200 OK`: operación correcta, incluso cuando la búsqueda no encuentra resultados.
+- `400 Bad Request`: datos de entrada ausentes, inválidos o duplicados.
+- `409 Conflict`: actualización con una temporada anterior a la vigente.
+- `503 Service Unavailable`: catálogo no disponible para consultar.
+- `500 Internal Server Error`: fallo inesperado del servidor.
+
+## Tests
+
+Desde la raíz del proyecto, ejecuta la suite del backend: | From the project
+root, run the backend test suite:
+
+```powershell
+py -m pytest -q
+```
+
+
 
 # Licencia | License
 
