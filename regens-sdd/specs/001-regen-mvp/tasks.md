@@ -91,7 +91,7 @@ el orden indicado y marcarse únicamente cuando se cumpla su criterio verificabl
   - **RF:** RF-1 a RF-7
   - **Hecho cuando:** La API devuelve los códigos `200`, `400`, `409`, `503` y `500` definidos, con mensajes en español y sin aplicar cambios parciales.
 
-- [ ] **T21. Probar el contrato REST**
+- [x] **T21. Probar el contrato REST**
   - **RF:** RF-1 a RF-7
   - **Hecho cuando:** Los tests de backend verifican payloads, parámetros opcionales, respuestas exitosas, errores de validación, catálogo no disponible y fallos inesperados.
 
