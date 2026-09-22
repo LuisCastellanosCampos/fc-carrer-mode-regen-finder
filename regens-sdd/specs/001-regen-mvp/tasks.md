@@ -87,7 +87,7 @@ el orden indicado y marcarse únicamente cuando se cumpla su criterio verificabl
   - **RF:** RF-3, RF-4, RF-5, RF-6, RF-7
   - **Hecho cuando:** `GET /api/v1/regens` acepta fecha, nacionalidad y posición opcional, y devuelve coincidencias ordenadas o lista vacía con mensaje.
 
-- [ ] **T20. Mapear errores y códigos HTTP**
+- [x] **T20. Mapear errores y códigos HTTP**
   - **RF:** RF-1 a RF-7
   - **Hecho cuando:** La API devuelve los códigos `200`, `400`, `409`, `503` y `500` definidos, con mensajes en español y sin aplicar cambios parciales.
 

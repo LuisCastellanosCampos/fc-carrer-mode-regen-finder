@@ -1,6 +1,7 @@
 from BACKEND.application.ports.catalog import CatalogPort
 from BACKEND.application.ports.use_cases import CatalogUpdateResult, UpdateCatalogCommand
 from BACKEND.domain.services.catalog_validation import validate_player_collection
+from BACKEND.domain.exceptions.errors import CatalogConflictError
 
 
 class UpdateCatalogService:
@@ -12,6 +13,11 @@ class UpdateCatalogService:
     def execute(self, command: UpdateCatalogCommand) -> CatalogUpdateResult:
         validated_players = validate_player_collection(command.players)
         current_players = self._catalog.read_players()
+        current_seasons = {player.season for player in current_players if player.season}
+        if current_seasons and command.season < max(current_seasons):
+            raise CatalogConflictError(
+                "La temporada del catálogo no puede ser anterior a la vigente"
+            )
         current_by_id = {player.id: player for player in current_players}
         incoming_by_id = {player.id: player for player in validated_players}
 
