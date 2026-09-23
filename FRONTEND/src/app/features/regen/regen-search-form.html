@@ -44,6 +44,37 @@
       </label>
     </div>
 
-    <button type="submit" [disabled]="searchForm.invalid">Buscar posibles regens</button>
+    <button type="submit" [disabled]="searchForm.invalid || status() === 'loading'">
+      {{ status() === 'loading' ? 'Buscando...' : 'Buscar posibles regens' }}
+    </button>
   </form>
+
+  @if (status() === 'loading') {
+    <p class="loading-state" role="status">Buscando posibles regens...</p>
+  }
+
+  @if (status() === 'error') {
+    <p class="error-state" role="alert">{{ message() }}</p>
+  }
+
+  @if (status() === 'success' && matches().length > 0) {
+    <section class="results" aria-labelledby="results-title">
+      <h2 id="results-title">Posibles regens</h2>
+      <div class="results-list">
+        @for (match of matches(); track match.player.id) {
+          <article class="match-card">
+            <div>
+              <h3>{{ match.player.name }}</h3>
+              <p>{{ match.player.position }} · Media {{ match.player.overall }} · Edad {{ match.player.age }}</p>
+            </div>
+            <p class="match-message">{{ match.match.message }}</p>
+          </article>
+        }
+      </div>
+    </section>
+  }
+
+  @if (status() === 'success' && matches().length === 0) {
+    <p class="empty-state" role="status">{{ message() }}</p>
+  }
 </section>
