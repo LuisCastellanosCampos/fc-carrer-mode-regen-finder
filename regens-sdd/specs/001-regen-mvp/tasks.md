@@ -97,7 +97,7 @@ el orden indicado y marcarse únicamente cuando se cumpla su criterio verificabl
 
 ## Frontend
 
-- [ ] **T22. Implementar el formulario de búsqueda**
+- [x] **T22. Implementar el formulario de búsqueda**
   - **RF:** RF-3, RF-4
   - **Hecho cuando:** La pantalla permite introducir fecha y nacionalidad obligatorias, posición opcional, y bloquea envíos con datos inválidos.
 
