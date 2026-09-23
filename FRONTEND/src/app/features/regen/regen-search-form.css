@@ -95,6 +95,72 @@ button:disabled {
   cursor: not-allowed;
 }
 
+.loading-state,
+.empty-state,
+.error-state {
+  margin: 1.5rem 0 0;
+  padding: 1rem;
+  border-radius: 4px;
+}
+
+.loading-state,
+.empty-state {
+  color: #53656b;
+  background: #eef3f0;
+}
+
+.error-state {
+  color: #a33b2d;
+  background: #f9e9e5;
+}
+
+.results {
+  margin-top: 2.5rem;
+}
+
+.results h2 {
+  margin: 0 0 1rem;
+  color: #173f49;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 1.75rem;
+  font-weight: 400;
+}
+
+.results-list {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.match-card {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem;
+  background: #ffffff;
+  border: 1px solid #d8d1c4;
+  border-radius: 4px;
+}
+
+.match-card h3,
+.match-card p {
+  margin: 0;
+}
+
+.match-card h3 {
+  color: #173f49;
+}
+
+.match-card p {
+  margin-top: 0.35rem;
+  color: #53656b;
+  font-size: 0.875rem;
+}
+
+.match-message {
+  max-width: 18rem;
+  text-align: right;
+}
+
 @media (max-width: 700px) {
   .search-panel {
     padding: 2rem 1.25rem;
@@ -102,5 +168,14 @@ button:disabled {
 
   .field-grid {
     grid-template-columns: 1fr;
+  }
+
+  .match-card {
+    flex-direction: column;
+  }
+
+  .match-message {
+    max-width: none;
+    text-align: left;
   }
 }

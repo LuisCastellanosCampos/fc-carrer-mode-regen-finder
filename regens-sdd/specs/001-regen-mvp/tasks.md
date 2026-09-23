@@ -101,7 +101,7 @@ el orden indicado y marcarse únicamente cuando se cumpla su criterio verificabl
   - **RF:** RF-3, RF-4
   - **Hecho cuando:** La pantalla permite introducir fecha y nacionalidad obligatorias, posición opcional, y bloquea envíos con datos inválidos.
 
-- [ ] **T23. Integrar cliente REST y estados de pantalla**
+- [x] **T23. Integrar cliente REST y estados de pantalla**
   - **RF:** RF-3, RF-4, RF-5, RF-6, RF-7
   - **Hecho cuando:** El frontend envía los parámetros correctos, muestra coincidencias y posición, respeta el orden recibido y presenta estados vacío, error y carga en español.
 

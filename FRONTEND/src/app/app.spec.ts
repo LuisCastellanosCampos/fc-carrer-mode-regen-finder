@@ -1,3 +1,4 @@
+import { provideHttpClient } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { App } from './app';
 import { RegenSearchForm } from './features/regen/regen-search-form';
@@ -6,6 +7,7 @@ describe('App', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [App],
+      providers: [provideHttpClient()],
     }).compileComponents();
   });
 
