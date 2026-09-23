@@ -1,0 +1,49 @@
+<section class="search-panel" aria-labelledby="search-title">
+  <p class="eyebrow">REGEN FINDER</p>
+  <h1 id="search-title">Encuentra el próximo regen</h1>
+  <p class="intro">Busca jugadores activos con los datos del jugador retirado.</p>
+
+  <form [formGroup]="searchForm" (ngSubmit)="onSubmit()" novalidate>
+    <div class="field-grid">
+      <label>
+        Fecha de nacimiento
+        <input
+          type="date"
+          name="birthDate"
+          formControlName="birthDate"
+          required
+          autocomplete="bday"
+        />
+        @if (searchForm.controls.birthDate.invalid && searchForm.controls.birthDate.touched) {
+          <span class="error">Introduce una fecha válida.</span>
+        }
+      </label>
+
+      <label>
+        Nacionalidad
+        <input
+          type="text"
+          name="nationality"
+          formControlName="nationality"
+          required
+          autocomplete="country-name"
+        />
+        @if (searchForm.controls.nationality.invalid && searchForm.controls.nationality.touched) {
+          <span class="error">La nacionalidad es obligatoria.</span>
+        }
+      </label>
+
+      <label>
+        Posición <span class="optional">(opcional)</span>
+        <input
+          type="text"
+          name="position"
+          formControlName="position"
+          autocomplete="off"
+        />
+      </label>
+    </div>
+
+    <button type="submit" [disabled]="searchForm.invalid">Buscar posibles regens</button>
+  </form>
+</section>
