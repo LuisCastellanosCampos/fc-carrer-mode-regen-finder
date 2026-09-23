@@ -105,13 +105,21 @@ el orden indicado y marcarse únicamente cuando se cumpla su criterio verificabl
   - **RF:** RF-3, RF-4, RF-5, RF-6, RF-7
   - **Hecho cuando:** El frontend envía los parámetros correctos, muestra coincidencias y posición, respeta el orden recibido y presenta estados vacío, error y carga en español.
 
-- [ ] **T24. Probar el frontend con ng test**
+- [ ] **T24. Configurar el proxy local frontend-backend**
+  - **RF:** RF-3, RF-4, RF-5, RF-6, RF-7
+  - **Hecho cuando:** El servidor de desarrollo Angular redirige las peticiones `/api` a la API FastAPI local mediante un proxy configurado, el README documenta cómo levantar ambos servidores y una búsqueda real desde el navegador llega a `GET /api/v1/regens` sin errores de origen.
+
+- [ ] **T25. Verificar el flujo integrado desde el navegador**
+  - **RF:** RF-3, RF-4, RF-5, RF-6, RF-7
+  - **Hecho cuando:** Con FastAPI y Angular levantados, una búsqueda válida muestra la respuesta real del backend, una consulta sin coincidencias muestra su mensaje, y un error de disponibilidad muestra el estado de error en español.
+
+- [ ] **T26. Probar el frontend con ng test**
   - **RF:** RF-3, RF-4, RF-5, RF-6, RF-7
   - **Hecho cuando:** `ng test` verifica validación del formulario, posición opcional, construcción de la petición, resultados ordenados, lista vacía y errores HTTP.
 
 ## Verificación final
 
-- [ ] **T25. Ejecutar la validación completa del MVP**
+- [ ] **T27. Ejecutar la validación completa del MVP**
   - **RF:** RF-1 a RF-7
   - **Hecho cuando:** `pytest` y `ng test` terminan correctamente, cada RF tiene al menos un test asociado y se revisan los criterios de finalización de la spec.
 
@@ -122,63 +130,63 @@ aprobarse una ampliación de la spec y del plan que documente Sofifa como fuente
 anual única del catálogo. El scraper no se ejecutará durante las búsquedas ni
 será una dependencia de disponibilidad en tiempo real de la API.
 
-- [ ] **T26. Aprobar el alcance de la fuente Sofifa**
+- [ ] **T28. Aprobar el alcance de la fuente Sofifa**
   - **RF:** RF-1, RF-2
   - **Hecho cuando:** La spec y el plan definen la ejecución manual o programada
     de una importación anual, la temporada soportada, el comportamiento ante
     errores de Sofifa, los límites de peticiones y que no se gestionan fuentes
     simultáneas.
 
-- [ ] **T27. Definir el contrato de datos del scraper**
+- [ ] **T29. Definir el contrato de datos del scraper**
   - **RF:** RF-1, RF-2
   - **Hecho cuando:** Existe un contrato versionado que identifica el formato
     de entrada (`json` o `csv`) y el mapeo explícito de ID, nombre, fecha de
     nacimiento, nacionalidad, posición, media, edad y temporada hacia `Player`,
     incluyendo campos ausentes, fechas no interpretables y posiciones múltiples.
 
-- [ ] **T28. Fijar la versión y dependencias del scraper externo**
+- [ ] **T30. Fijar la versión y dependencias del scraper externo**
   - **RF:** RF-1, RF-2
   - **Hecho cuando:** El proyecto documenta el commit o versión de
     `sofifa-scraper`, sus dependencias `requests` y `parsel`, la licencia MIT,
     el límite de páginas y el procedimiento reproducible de ejecución sin
     incorporar credenciales ni modificar el scraper sin trazabilidad.
 
-- [ ] **T29. Implementar el adaptador de ejecución Sofifa**
+- [ ] **T31. Implementar el adaptador de ejecución Sofifa**
   - **RF:** RF-1, RF-2
   - **Hecho cuando:** Un adaptador o comando local ejecuta el scraper con la
     temporada y límite de páginas configurados, guarda el JSON o CSV original
     en `data/raw/<season>/`, devuelve un error controlado si falla y no modifica
     el catálogo por sí mismo.
 
-- [ ] **T30. Implementar la transformación y validación del artefacto**
+- [ ] **T32. Implementar la transformación y validación del artefacto**
   - **RF:** RF-1, RF-2
   - **Hecho cuando:** El adaptador transforma `country` y `positions` a los
     campos del dominio, convierte los tipos, asigna la temporada y produce
     `Player` válidos; los registros incompletos, duplicados o ambiguos se
     rechazan antes de enviar cualquier actualización.
 
-- [ ] **T31. Implementar la persistencia local con SQLite**
+- [ ] **T33. Implementar la persistencia local con SQLite**
   - **RF:** RF-1, RF-2, RF-7
   - **Hecho cuando:** Existe un adaptador SQLite que implementa `CatalogPort`,
     crea o migra la tabla del catálogo en una ruta configurable como
     `data/catalog.db`, conserva los campos de `Player` y reemplaza los datos de
     forma atómica sin depender de FastAPI ni del scraper.
 
-- [ ] **T32. Conectar la API con el catálogo SQLite**
+- [ ] **T34. Conectar la API con el catálogo SQLite**
   - **RF:** RF-1, RF-2
   - **Hecho cuando:** La composición local usa SQLite en lugar de memoria, la
     importación envía la colección validada a `PUT /api/v1/players/catalog`,
     respeta el control de temporada, conserva la atomicidad existente y la API
     consulta el catálogo persistido, no Sofifa.
 
-- [ ] **T33. Probar el pipeline y la persistencia**
+- [ ] **T35. Probar el pipeline y la persistencia**
   - **RF:** RF-1, RF-2
   - **Hecho cuando:** Hay tests para el mapeo válido, campos faltantes, fecha
     inválida, posiciones múltiples, ID duplicado, respuesta vacía, fallo de
     red, error HTTP, garantía de que una importación fallida no altera el
     catálogo y recuperación del catálogo después de recrear la aplicación.
 
-- [ ] **T34. Documentar la operación anual local**
+- [ ] **T36. Documentar la operación anual local**
   - **RF:** RF-1, RF-2
   - **Hecho cuando:** El README explica cómo obtener el scraper fijado, instalar
     sus dependencias, ejecutarlo con límites responsables, revisar el artefacto
