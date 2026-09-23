@@ -8,8 +8,8 @@ Este proyecto se está creando bajo la metodología **Spec-Driven Development (S
 
 # Tecnologías utilizadas | Technologies Used
 **Backend** | Python 3.12+, FastAPI, Uvicorn, Pydantic v2 |
-**Frontend** | Angular |
-**Testing** | pytest, httpx |
+**Frontend** | Angular, TypeScript, Reactive Forms, HttpClient |
+**Testing** | pytest, httpx, Vitest mediante Angular CLI |
 
 # Instalación y ejecución local | Installation and Local Execution
 
