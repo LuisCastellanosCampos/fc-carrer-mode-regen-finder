@@ -28,6 +28,29 @@ py -m uvicorn BACKEND.main:app --reload
 La API estará disponible en `http://127.0.0.1:8000`. | The API will be
 available at `http://127.0.0.1:8000`.
 
+Para levantar el frontend Angular, abre otra terminal desde la raíz del
+proyecto y ejecuta: | To start the Angular frontend, open another terminal
+from the project root and run:
+
+```powershell
+Push-Location FRONTEND
+npm install
+npm start
+Pop-Location
+```
+
+La aplicación estará disponible en `http://localhost:4200`. | The application
+will be available at `http://localhost:4200`.
+
+La API y el frontend se ejecutan actualmente en puertos distintos. El cliente
+Angular usa rutas relativas `/api`; la configuración del proxy local para
+redirigirlas a FastAPI está planificada en las tareas T24 y T25. Hasta
+completar esas tareas, la API puede probarse directamente en
+`http://127.0.0.1:8000`. | The API and frontend currently run on different ports.
+The Angular client uses relative `/api` routes; the local proxy configuration
+to forward them to FastAPI is planned in tasks T24 and T25. Until those tasks
+are complete, the API can be tested directly at `http://127.0.0.1:8000`.
+
 Para actualizar el catálogo anual, realiza una petición `PUT` a
 `http://127.0.0.1:8000/api/v1/players/catalog` con el header
 `Content-Type: application/json`. | To update the annual catalog, send a
@@ -142,6 +165,15 @@ root, run the backend test suite:
 
 ```powershell
 py -m pytest -q
+```
+
+Para ejecutar los tests del frontend desde la raíz del proyecto: | To run the
+frontend tests from the project root:
+
+```powershell
+Push-Location FRONTEND
+ng test --watch=false --no-progress
+Pop-Location
 ```
 
 
