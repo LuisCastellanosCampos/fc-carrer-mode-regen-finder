@@ -105,7 +105,7 @@ el orden indicado y marcarse únicamente cuando se cumpla su criterio verificabl
   - **RF:** RF-3, RF-4, RF-5, RF-6, RF-7
   - **Hecho cuando:** El frontend envía los parámetros correctos, muestra coincidencias y posición, respeta el orden recibido y presenta estados vacío, error y carga en español.
 
-- [ ] **T24. Configurar el proxy local frontend-backend**
+- [x] **T24. Configurar el proxy local frontend-backend**
   - **RF:** RF-3, RF-4, RF-5, RF-6, RF-7
   - **Hecho cuando:** El servidor de desarrollo Angular redirige las peticiones `/api` a la API FastAPI local mediante un proxy configurado, el README documenta cómo levantar ambos servidores y una búsqueda real desde el navegador llega a `GET /api/v1/regens` sin errores de origen.
 
