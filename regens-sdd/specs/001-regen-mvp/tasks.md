@@ -109,11 +109,11 @@ el orden indicado y marcarse únicamente cuando se cumpla su criterio verificabl
   - **RF:** RF-3, RF-4, RF-5, RF-6, RF-7
   - **Hecho cuando:** El servidor de desarrollo Angular redirige las peticiones `/api` a la API FastAPI local mediante un proxy configurado, el README documenta cómo levantar ambos servidores y una búsqueda real desde el navegador llega a `GET /api/v1/regens` sin errores de origen.
 
-- [ ] **T25. Verificar el flujo integrado desde el navegador**
+- [x] **T25. Verificar el flujo integrado desde el navegador**
   - **RF:** RF-3, RF-4, RF-5, RF-6, RF-7
   - **Hecho cuando:** Con FastAPI y Angular levantados, una búsqueda válida muestra la respuesta real del backend, una consulta sin coincidencias muestra su mensaje, y un error de disponibilidad muestra el estado de error en español.
 
-- [ ] **T26. Probar el frontend con ng test**
+- [x] **T26. Probar el frontend con ng test**
   - **RF:** RF-3, RF-4, RF-5, RF-6, RF-7
   - **Hecho cuando:** `ng test` verifica validación del formulario, posición opcional, construcción de la petición, resultados ordenados, lista vacía y errores HTTP.
 

@@ -140,4 +140,22 @@ describe('RegenSearchForm T23', () => {
       'No se pudo consultar el catálogo.'
     );
   });
+
+  it('should show a Spanish error and preserve values after an HTTP 400', () => {
+    fixture.nativeElement.querySelector('button[type="submit"]').click();
+    httpTesting.expectOne((req) => req.url === '/api/v1/regens').flush(
+      { detail: 'La fecha de nacimiento es inválida.' },
+      { status: 400, statusText: 'Bad Request' }
+    );
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelector('.error-state')?.textContent).toContain(
+      'No se pudo consultar el catálogo.'
+    );
+    expect(fixture.componentInstance.searchForm.getRawValue()).toEqual({
+      birthDate: '1998-04-12',
+      nationality: 'Spain',
+      position: 'ST'
+    });
+  });
 });
