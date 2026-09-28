@@ -48,7 +48,18 @@ export class RegenSearchForm {
     position: new FormControl('', { nonNullable: true })
   });
 
+  onClear(): void {
+    this.searchForm.reset();
+    this.matches.set([]);
+    this.message.set(null);
+    this.status.set('idle');
+  }
+
   onSubmit(): void {
+    if (this.status() === 'loading') {
+      return;
+    }
+
     if (this.searchForm.invalid) {
       this.searchForm.markAllAsTouched();
       return;

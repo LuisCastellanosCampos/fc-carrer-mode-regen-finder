@@ -1,52 +1,66 @@
 <section class="search-panel" aria-labelledby="search-title">
   <p class="eyebrow">REGEN FINDER</p>
   <h1 id="search-title">Encuentra el próximo regen</h1>
-  <p class="intro">Busca jugadores activos con los datos del jugador retirado.</p>
+  <p class="intro">Busca tu jugador joven y encuentra su regen</p>
 
   <form [formGroup]="searchForm" (ngSubmit)="onSubmit()" novalidate>
     <div class="field-grid">
       <label>
-        Fecha de nacimiento
+        <span class="field-label">Fecha de nacimiento</span>
         <input
+          id="birth-date"
           type="date"
           name="birthDate"
           formControlName="birthDate"
           required
           autocomplete="bday"
+          [attr.aria-invalid]="searchForm.controls.birthDate.invalid && searchForm.controls.birthDate.touched ? 'true' : null"
+          [attr.aria-describedby]="searchForm.controls.birthDate.invalid && searchForm.controls.birthDate.touched ? 'birth-date-error' : null"
         />
         @if (searchForm.controls.birthDate.invalid && searchForm.controls.birthDate.touched) {
-          <span class="error">Introduce una fecha válida.</span>
+          <span id="birth-date-error" class="error" role="alert">Introduce una fecha válida.</span>
         }
       </label>
 
       <label>
-        Nacionalidad
+        <span class="field-label">Nacionalidad</span>
         <input
+          id="nationality"
           type="text"
           name="nationality"
           formControlName="nationality"
           required
           autocomplete="country-name"
+          [attr.aria-invalid]="searchForm.controls.nationality.invalid && searchForm.controls.nationality.touched ? 'true' : null"
+          [attr.aria-describedby]="searchForm.controls.nationality.invalid && searchForm.controls.nationality.touched ? 'nationality-help nationality-error' : 'nationality-help'"
         />
+        <span id="nationality-help" class="field-help">Escríbela como aparece en el juego.</span>
         @if (searchForm.controls.nationality.invalid && searchForm.controls.nationality.touched) {
-          <span class="error">La nacionalidad es obligatoria.</span>
+          <span id="nationality-error" class="error" role="alert">La nacionalidad es obligatoria.</span>
         }
       </label>
 
       <label>
-        Posición <span class="optional">(opcional)</span>
+        <span class="field-label">Posición <span class="optional">(opcional)</span></span>
         <input
+          id="position"
           type="text"
           name="position"
           formControlName="position"
+          placeholder="Ej.: ST"
           autocomplete="off"
         />
       </label>
     </div>
 
-    <button type="submit" [disabled]="searchForm.invalid || status() === 'loading'">
-      {{ status() === 'loading' ? 'Buscando...' : 'Buscar posibles regens' }}
-    </button>
+    <div class="form-actions">
+      <button class="search-button" type="submit" [disabled]="searchForm.invalid || status() === 'loading'">
+        {{ status() === 'loading' ? 'Buscando...' : 'Buscar posibles regens' }}
+      </button>
+      <button class="clear-button" type="button" (click)="onClear()" [disabled]="status() === 'loading'">
+        Limpiar
+      </button>
+    </div>
   </form>
 
   @if (status() === 'loading') {

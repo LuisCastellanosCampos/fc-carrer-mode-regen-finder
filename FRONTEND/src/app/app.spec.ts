@@ -17,6 +17,34 @@ describe('App', () => {
     expect(app).toBeTruthy();
   });
 
+  it('should render the product header and active search navigation', async () => {
+    const fixture = TestBed.createComponent(App);
+    await fixture.whenStable();
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+    const searchLink = compiled.querySelector('nav a') as HTMLAnchorElement;
+
+    const brand = compiled.querySelector('header .brand');
+    expect(brand?.textContent?.trim()).toBe('Radar Regen');
+    expect(compiled.querySelectorAll('nav a')).toHaveLength(1);
+    expect(searchLink.textContent).toContain('Búsqueda');
+    expect(searchLink.getAttribute('href')).toBe('#main-content');
+    expect(searchLink.getAttribute('aria-current')).toBe('page');
+  });
+
+  it('should expose the search view in a main landmark with a page heading', async () => {
+    const fixture = TestBed.createComponent(App);
+    await fixture.whenStable();
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+    const main = compiled.querySelector('main#main-content');
+
+    expect(compiled.querySelector('header')).toBeTruthy();
+    expect(compiled.querySelector('nav[aria-label="Navegación principal"]')).toBeTruthy();
+    expect(main).toBeTruthy();
+    expect(main?.querySelector('h1')?.textContent).toContain('Encuentra el próximo regen');
+  });
+
   it('should render the regen search fields', async () => {
     const fixture = TestBed.createComponent(App);
     await fixture.whenStable();

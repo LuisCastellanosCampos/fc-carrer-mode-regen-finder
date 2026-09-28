@@ -19,18 +19,18 @@ aprobarse la especificación y el plan de esta carpeta.
 
 ## Shell y búsqueda
 
-- [ ] **P3. Implementar el shell de producto**
+- [x] **P3. Implementar el shell de producto**
   - **PF:** PF-1, PF-6
   - **Hecho cuando:** La aplicación tiene cabecera, navegación real, landmarks,
     título de página y vista de búsqueda activa en escritorio y móvil.
 
-- [ ] **P4. Rediseñar el panel de filtros**
+- [x] **P4. Rediseñar el panel de filtros**
   - **PF:** PF-2, PF-4, PF-5
   - **Hecho cuando:** Fecha, nacionalidad y posición conservan el payload actual,
     tienen labels y estados claros, existen buscar y limpiar, y el panel se
     adapta sin overflow desde 320 px.
 
-- [ ] **P5. Cubrir la interacción del formulario**
+- [x] **P5. Cubrir la interacción del formulario**
   - **PF:** PF-2, PF-4, PF-7
   - **Hecho cuando:** Las validaciones aparecen junto a los campos, los envíos
     duplicados quedan bloqueados durante la carga, los criterios se conservan en

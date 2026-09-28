@@ -77,6 +77,107 @@ describe('RegenSearchForm T23', () => {
 
   afterEach(() => httpTesting.verify());
 
+  it('keeps field controls anchored when validation errors are shown', () => {
+    const controls = fixture.componentInstance.searchForm.controls;
+    controls.birthDate.setValue('');
+    controls.nationality.setValue('');
+    controls.birthDate.markAsTouched();
+    controls.nationality.markAsTouched();
+    fixture.detectChanges();
+
+    const labels = fixture.nativeElement.querySelectorAll('.field-grid > label');
+    expect(fixture.nativeElement.querySelectorAll('.error')).toHaveLength(2);
+    expect(window.getComputedStyle(fixture.nativeElement.querySelector('.field-grid')).alignItems)
+      .toBe('flex-start');
+    expect(labels).toHaveLength(3);
+  });
+
+  it('keeps the optional position hint beside its label', () => {
+    const fieldLabel = fixture.nativeElement.querySelector(
+      '.field-grid label:nth-child(3) .field-label'
+    ) as HTMLElement;
+
+    expect(fieldLabel.textContent.trim()).toBe('Posición (opcional)');
+    expect(window.getComputedStyle(fieldLabel).display).toBe('flex');
+  });
+
+  it('clears the filters and returns to the initial state', () => {
+    const clearButton = fixture.nativeElement.querySelector('.clear-button') as HTMLButtonElement;
+    expect(clearButton).toBeTruthy();
+
+    clearButton.click();
+    fixture.detectChanges();
+
+    expect(fixture.componentInstance.searchForm.getRawValue()).toEqual({
+      birthDate: '',
+      nationality: '',
+      position: ''
+    });
+    expect(fixture.componentInstance.status()).toBe('idle');
+    expect(fixture.componentInstance.matches()).toEqual([]);
+    expect(fixture.componentInstance.searchForm.pristine).toBe(true);
+    expect(fixture.componentInstance.searchForm.untouched).toBe(true);
+  });
+
+  it('shows validation errors beside and associated with invalid fields', () => {
+    const controls = fixture.componentInstance.searchForm.controls;
+    controls.birthDate.setValue('');
+    controls.nationality.setValue('');
+
+    fixture.componentInstance.onSubmit();
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelector('#birth-date-error')?.textContent).toContain(
+      'Introduce una fecha válida.'
+    );
+    expect(fixture.nativeElement.querySelector('#nationality-error')?.textContent).toContain(
+      'La nacionalidad es obligatoria.'
+    );
+    expect(fixture.nativeElement.querySelector('#birth-date')?.getAttribute('aria-describedby'))
+      .toBe('birth-date-error');
+    expect(fixture.nativeElement.querySelector('#nationality')?.getAttribute('aria-invalid'))
+      .toBe('true');
+  });
+
+  it('sends only one request while a search is loading', () => {
+    const component = fixture.componentInstance;
+    component.onSubmit();
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('.search-button').disabled).toBe(true);
+    expect(fixture.nativeElement.querySelector('.clear-button').disabled).toBe(true);
+    component.onSubmit();
+
+    const requests = httpTesting.match((req) => req.url === '/api/v1/regens');
+    requests.forEach((request) => request.flush(responseWithMatches));
+
+    expect(requests).toHaveLength(1);
+  });
+
+  it('preserves search criteria after a successful response', () => {
+    fixture.nativeElement.querySelector('.search-button').click();
+    httpTesting.expectOne((req) => req.url === '/api/v1/regens').flush(responseWithMatches);
+    fixture.detectChanges();
+
+    expect(fixture.componentInstance.searchForm.getRawValue()).toEqual({
+      birthDate: '1998-04-12',
+      nationality: 'Spain',
+      position: 'ST'
+    });
+  });
+
+  it('allows filter fields to wrap without panel overflow at 320px', () => {
+    Object.defineProperty(window, 'innerWidth', { configurable: true, value: 320 });
+    window.dispatchEvent(new Event('resize'));
+    fixture.detectChanges();
+
+    const panel = fixture.nativeElement.querySelector('.search-panel') as HTMLElement;
+    const grid = fixture.nativeElement.querySelector('.field-grid') as HTMLElement;
+
+    expect(window.getComputedStyle(panel).boxSizing).toBe('border-box');
+    expect(window.getComputedStyle(grid).display).toBe('flex');
+    expect(window.getComputedStyle(grid).flexWrap).toBe('wrap');
+  });
+
   it('should request the required parameters and omit an empty position', () => {
     fixture.componentInstance.searchForm.controls.position.setValue('');
     fixture.nativeElement.querySelector('button[type="submit"]').click();
