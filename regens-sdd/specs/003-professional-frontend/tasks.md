@@ -38,13 +38,13 @@ aprobarse la especificación y el plan de esta carpeta.
 
 ## Resultados y estados
 
-- [ ] **P6. Implementar la presentación de resultados**
+- [x] **P6. Implementar la presentación de resultados**
   - **PF:** PF-3, PF-6
   - **Hecho cuando:** Cada `RegenMatch` muestra nombre, media, edad, posición,
     nacionalidad, fecha, temporada y señales explícitas de coincidencia, sin
     cambiar el orden ni filtrar la respuesta.
 
-- [ ] **P7. Implementar estados de consulta**
+- [x] **P7. Implementar estados de consulta**
   - **PF:** PF-4, PF-5
   - **Hecho cuando:** Existen estados inicial, carga, resultados, vacío, error de
     validación y error recuperable, con mensajes en español, roles accesibles y

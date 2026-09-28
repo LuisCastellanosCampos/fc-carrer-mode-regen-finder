@@ -140,6 +140,8 @@ button:disabled {
   cursor: not-allowed;
 }
 
+.initial-state,
+.validation-summary,
 .loading-state,
 .empty-state,
 .error-state {
@@ -148,27 +150,63 @@ button:disabled {
   border-radius: 4px;
 }
 
+.initial-state {
+  color: var(--color-muted, #5c6a64);
+  background: var(--color-canvas, #f2f5f1);
+}
+
+.validation-summary {
+  color: var(--color-danger, #b8423a);
+  background: #f8e9e6;
+}
+
 .loading-state,
 .empty-state {
-  color: #53656b;
-  background: #eef3f0;
+  color: var(--color-muted, #5c6a64);
+  background: var(--color-canvas, #f2f5f1);
 }
 
 .error-state {
-  color: #a33b2d;
+  color: var(--color-danger, #b8423a);
   background: #f9e9e5;
+}
+
+.error-state p {
+  margin: 0;
+}
+
+.retry-button {
+  margin-top: 0.75rem;
+  color: var(--color-ink, #172622);
+  background: var(--color-surface, #ffffff);
+  border-color: var(--color-danger, #b8423a);
 }
 
 .results {
   margin-top: 2.5rem;
 }
 
-.results h2 {
-  margin: 0 0 1rem;
-  color: #173f49;
-  font-family: Georgia, 'Times New Roman', serif;
+.results-summary {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.results-summary h2 {
+  margin: 0;
+  color: var(--color-ink, #172622);
+  font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
   font-size: 1.75rem;
-  font-weight: 400;
+  font-weight: 600;
+}
+
+.results-summary p {
+  margin: 0;
+  color: var(--color-muted, #5c6a64);
+  font-size: 0.875rem;
+  text-align: right;
 }
 
 .results-list {
@@ -177,33 +215,122 @@ button:disabled {
 }
 
 .match-card {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(11rem, 0.55fr);
+  gap: 1rem 1.5rem;
+  min-width: 0;
   padding: 1rem;
-  background: #ffffff;
-  border: 1px solid #d8d1c4;
+  background: var(--color-surface, #ffffff);
+  border: 1px solid var(--color-border, #d6ded8);
   border-radius: 4px;
 }
 
-.match-card h3,
-.match-card p {
+.player-info {
+  min-width: 0;
+}
+
+.match-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.match-heading h3,
+.match-heading p {
   margin: 0;
 }
 
-.match-card h3 {
-  color: #173f49;
+.player-name {
+  min-width: 0;
+  color: var(--color-ink, #172622);
+  font-size: 1.1rem;
 }
 
-.match-card p {
-  margin-top: 0.35rem;
-  color: #53656b;
-  font-size: 0.875rem;
+.player-overall {
+  display: flex;
+  align-items: baseline;
+  gap: 0.35rem;
+  color: var(--color-teal, #357c73);
+  font-family: 'IBM Plex Mono', 'Consolas', monospace;
+}
+
+.player-overall strong {
+  font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+  font-size: 1.75rem;
+  line-height: 1;
+}
+
+.player-overall span {
+  font-size: 0.65rem;
+}
+
+.player-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem 1.25rem;
+  margin: 0.9rem 0 0;
+}
+
+.player-details div {
+  min-width: 4rem;
+}
+
+.player-details dt {
+  color: var(--color-muted, #5c6a64);
+  font-size: 0.7rem;
+}
+
+.player-details dd {
+  margin: 0.15rem 0 0;
+  color: var(--color-ink, #172622);
+  font-size: 0.85rem;
+  overflow-wrap: anywhere;
+}
+
+.match-indicators {
+  display: grid;
+  align-content: start;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.match-indicators li {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid var(--color-border, #d6ded8);
+  font-size: 0.75rem;
+}
+
+.match-indicators li span {
+  color: var(--color-muted, #5c6a64);
+}
+
+.is-match {
+  color: var(--color-teal, #357c73);
+}
+
+.is-no-match {
+  color: var(--color-danger, #b8423a);
+}
+
+.is-unknown {
+  color: var(--color-muted, #5c6a64);
 }
 
 .match-message {
-  max-width: 18rem;
-  text-align: right;
+  grid-column: 1 / -1;
+  margin: 0;
+  padding-top: 0.75rem;
+  color: var(--color-muted, #5c6a64);
+  border-top: 1px solid var(--color-border, #d6ded8);
+  font-size: 0.8rem;
+  overflow-wrap: anywhere;
 }
 
 @media (max-width: 700px) {
@@ -211,12 +338,16 @@ button:disabled {
     padding: 1.5rem 1rem;
   }
 
-  .match-card {
+  .results-summary {
+    align-items: flex-start;
     flex-direction: column;
   }
 
-  .match-message {
-    max-width: none;
+  .results-summary p {
     text-align: left;
+  }
+
+  .match-card {
+    grid-template-columns: minmax(0, 1fr);
   }
 }

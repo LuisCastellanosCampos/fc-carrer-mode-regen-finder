@@ -63,24 +63,100 @@
     </div>
   </form>
 
+  @if (status() === 'idle' && searchForm.pristine && !searchForm.touched) {
+    <p class="initial-state" role="status">
+      Para empezar, introduce la fecha de nacimiento y la nacionalidad. La posición es opcional.
+    </p>
+  }
+
+  @if (searchForm.invalid && searchForm.touched) {
+    <p class="validation-summary" role="alert" aria-live="assertive">
+      Revisa los campos marcados antes de buscar.
+    </p>
+  }
+
   @if (status() === 'loading') {
     <p class="loading-state" role="status">Buscando posibles regens...</p>
   }
 
   @if (status() === 'error') {
-    <p class="error-state" role="alert">{{ message() }}</p>
+    <div class="error-state" role="alert">
+      <p>{{ message() }}</p>
+      <button class="retry-button" type="button" (click)="onSubmit()">
+        Reintentar
+      </button>
+    </div>
   }
 
   @if (status() === 'success' && matches().length > 0) {
     <section class="results" aria-labelledby="results-title">
-      <h2 id="results-title">Posibles regens</h2>
+      <div class="results-summary" role="status" aria-live="polite">
+        <h2 id="results-title">Posibles regens</h2>
+        <p>
+          <strong>{{ matches().length }}</strong> coincidencias para
+          <time [attr.datetime]="submittedQuery()?.birth_date">{{ submittedQuery()?.birth_date }}</time>,
+          {{ submittedQuery()?.nationality }} y
+          {{ submittedQuery()?.position || 'cualquier posición' }}
+        </p>
+      </div>
       <div class="results-list">
         @for (match of matches(); track match.player.id) {
           <article class="match-card">
-            <div>
-              <h3>{{ match.player.name }}</h3>
-              <p>{{ match.player.position }} · Media {{ match.player.overall }} · Edad {{ match.player.age }}</p>
+            <div class="player-info">
+              <div class="match-heading">
+                <h3 class="player-name">{{ match.player.name }}</h3>
+                <p class="player-overall"><strong>{{ match.player.overall }}</strong><span>MEDIA</span></p>
+              </div>
+              <dl class="player-details">
+                <div>
+                  <dt>Edad</dt>
+                  <dd class="player-age">{{ match.player.age }}</dd>
+                </div>
+                <div>
+                  <dt>Posición</dt>
+                  <dd class="player-position">{{ match.player.position }}</dd>
+                </div>
+                <div>
+                  <dt>Nacionalidad</dt>
+                  <dd class="player-nationality">{{ match.player.nationality }}</dd>
+                </div>
+                <div>
+                  <dt>Fecha de nacimiento</dt>
+                  <dd><time class="player-birth-date" [attr.datetime]="match.player.birth_date">{{ match.player.birth_date }}</time></dd>
+                </div>
+                <div>
+                  <dt>Temporada</dt>
+                  <dd class="player-season">{{ match.player.season }}</dd>
+                </div>
+              </dl>
             </div>
+            <ul class="match-indicators" aria-label="Comparación con los criterios">
+              <li>
+                <span>Fecha</span>
+                <strong class="date-match" [class.is-match]="match.match.birth_date" [class.is-no-match]="!match.match.birth_date">
+                  {{ match.match.birth_date ? 'Coincide' : 'No coincide' }}
+                </strong>
+              </li>
+              <li>
+                <span>Nacionalidad</span>
+                <strong class="nationality-match" [class.is-match]="match.match.nationality" [class.is-no-match]="!match.match.nationality">
+                  {{ match.match.nationality ? 'Coincide' : 'No coincide' }}
+                </strong>
+              </li>
+              <li>
+                <span>Posición</span>
+                <strong class="position-match"
+                  [class.is-match]="match.match.position === true"
+                  [class.is-no-match]="match.match.position === false"
+                  [class.is-unknown]="match.match.position === null">
+                  @if (match.match.position === null) {
+                    No informada
+                  } @else {
+                    {{ match.match.position ? 'Coincide' : 'No coincide' }}
+                  }
+                </strong>
+              </li>
+            </ul>
             <p class="match-message">{{ match.match.message }}</p>
           </article>
         }
