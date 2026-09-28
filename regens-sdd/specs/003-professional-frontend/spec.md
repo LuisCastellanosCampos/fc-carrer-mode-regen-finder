@@ -14,6 +14,41 @@ comparables y una interfaz responsive orientada a explorar información. La
 aplicación tendrá identidad, textos, componentes y recursos propios; no copiará
 marca, código, imágenes, iconos propietarios ni diseño exacto de FUTBIN.
 
+## Dirección visual y composición aprobada (P2)
+
+- El nombre visible del producto será **Radar Regen**. El logotipo será
+  únicamente tipográfico; no se usarán marcas de EA, FUTBIN ni iconos que
+  sugieran afiliación.
+- La paleta combinará fondo `#F2F5F1`, superficies `#FFFFFF`, texto principal
+  `#172622`, texto secundario `#5C6A64`, bordes `#D6DED8`, lima `#D8ED69`,
+  coral `#E6785B`, verde azulado `#357C73` y rojo semántico `#B8423A`. La lima
+  destacará acciones y selección con texto oscuro; coral será un acento, no
+  texto pequeño sobre fondo claro. Los estados tendrán texto o icono además de
+  color.
+- La tipografía será Barlow Condensed para títulos y cifras destacadas, IBM Plex
+  Sans para controles y lectura general e IBM Plex Mono para datos numéricos
+  compactos. Se usarán fuentes locales con licencia SIL Open Font License 1.1,
+  con alternativas del sistema; no se dependerá de una CDN. La licencia de cada
+  archivo se conservará junto a los recursos al incorporarlos.
+- La jerarquía priorizará título y acción de búsqueda, después filtros y resumen
+  de consulta, y finalmente los datos comparables. Media y nombre serán los
+  elementos más destacados de cada resultado; la información complementaria y
+  los estados ocuparán niveles secundarios legibles.
+- El shell usará una cabecera horizontal compacta con el nombre a la izquierda
+  y un único enlace real «Búsqueda», marcado como activo visualmente y con
+  `aria-current="page"`. No habrá barra lateral, menú hamburguesa ni enlaces
+  ficticios para una aplicación de una sola vista.
+- A partir de 1024 px, el área de trabajo mostrará filtros a la izquierda y
+  resultados a la derecha. Por debajo de 1024 px, ambos se apilarán, con filtros
+  antes de resultados; los campos también se apilarán en móvil.
+- Los resultados se mostrarán solo como tarjetas compactas en todos los anchos.
+  No se implementará tabla ni selector de vista. El orden de las tarjetas será
+  el recibido de la API.
+- No se usarán imágenes, logotipos, iconos propietarios ni recursos de marca de
+  terceros. Cualquier recurso añadido posteriormente deberá tener licencia
+  compatible y documentada; no se añadirá una dependencia para esta dirección
+  visual.
+
 ## Alcance
 
 La fase cubre únicamente la aplicación Angular en `FRONTEND/`. Mantendrá el
@@ -54,8 +89,9 @@ capacidades que la API no ofrece.
 La aplicación deberá mostrar una estructura consistente con:
 
 - cabecera con nombre propio de la herramienta y acceso a la búsqueda;
-- navegación secundaria o lateral preparada para la vista activa, sin enlaces
-  falsos a funciones no implementadas;
+- cabecera horizontal compacta con nombre propio y un único enlace real
+  «Búsqueda» para la vista activa, sin enlaces falsos a funciones no
+  implementadas;
 - contenido principal con título, descripción breve y área de trabajo;
 - pie o información secundaria solo cuando aporte contexto real, sin desplazar
   la búsqueda innecesariamente.
@@ -89,7 +125,7 @@ siendo una regla del backend, no una configuración visual engañosa.
 Cuando la API devuelva coincidencias, la vista deberá mostrar:
 
 - un resumen con los criterios consultados y el número de coincidencias;
-- tarjetas o filas compactas por jugador, con nombre, media, edad, posición,
+- tarjetas compactas por jugador, con nombre, media, edad, posición,
   nacionalidad, fecha de nacimiento y temporada cuando estén disponibles;
 - una señal explícita y comprensible para cada coincidencia de fecha,
   nacionalidad y posición, distinguiendo posición coincidente, no coincidente y
@@ -102,8 +138,7 @@ Cuando la API devuelva coincidencias, la vista deberá mostrar:
   dominio.
 
 La interfaz no modificará, reordenará ni filtrará silenciosamente la colección
-recibida. Si se incorpora una vista alternativa de tabla, deberá representar los
-mismos datos y conservar la accesibilidad de las tarjetas.
+recibida. No habrá vista alternativa de tabla.
 
 ### PF-4. Resolver todos los estados de la consulta
 
@@ -127,8 +162,8 @@ cuando corresponda.
 La experiencia deberá adaptarse como mínimo a anchos de 320 px, 768 px y
 1440 px sin scroll horizontal accidental. En escritorio podrá usar una
 composición de panel de filtros y resultados; en móvil deberá priorizar el
-contenido, apilar los campos y convertir la navegación o filtros secundarios en
-un patrón accesible de expansión.
+contenido y apilar los campos. Como solo existe la vista de búsqueda, la
+navegación permanecerá visible y no se sustituirá por un menú colapsable.
 
 Los controles táctiles tendrán un tamaño utilizable, el texto se podrá leer sin
 zoom y ningún nombre, etiqueta, mensaje o botón podrá quedar cortado u ocultar
@@ -146,7 +181,8 @@ recursos de FUTBIN.
 La composición deberá priorizar densidad útil, lectura rápida y comparación. No
 se añadirán gráficos decorativos, métricas ficticias, publicidad, noticias,
 monedas, mercado, squad builder ni contenido editorial que no tenga soporte en
-el dominio.
+el dominio. Se aplicarán el nombre, la paleta, las familias tipográficas y la
+jerarquía establecidos en «Dirección visual y composición aprobada (P2)».
 
 ### PF-7. Mantener el contrato y la calidad del frontend
 

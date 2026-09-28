@@ -5,13 +5,13 @@ aprobarse la especificación y el plan de esta carpeta.
 
 ## Aprobación y dirección visual
 
-- [ ] **P1. Aprobar el alcance del frontend**
+- [x] **P1. Aprobar el alcance del frontend**
   - **PF:** PF-1 a PF-7
   - **Hecho cuando:** Se confirma que la fase solo modifica Angular, conserva
     `GET /api/v1/regens`, no añade funciones de FUTBIN fuera de alcance y define
     los anchos responsive y criterios de accesibilidad.
 
-- [ ] **P2. Fijar identidad y composición**
+- [x] **P2. Fijar identidad y composición**
   - **PF:** PF-1, PF-5, PF-6
   - **Hecho cuando:** Se documentan nombre, paleta, tipografía, jerarquía visual,
     shell, navegación activa y decisión entre tarjetas, tabla o ambas sin usar

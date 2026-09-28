@@ -22,8 +22,8 @@ API ni persistencia.
    conservando sus controles reactivos y el payload del servicio.
 3. Ejecutar la consulta existente y mostrar un resumen persistente de los
    criterios enviados.
-4. Representar cada `RegenMatch` en una tarjeta o fila densa con sus atributos y
-   estados de coincidencia.
+4. Representar cada `RegenMatch` en una tarjeta compacta con sus atributos y
+  estados de coincidencia, respetando el orden recibido.
 5. Cubrir explícitamente carga, error, vacío, validación y limpieza.
 6. Aplicar breakpoints y navegación por teclado, y comprobar la experiencia en
    320 px, 768 px y 1440 px.
@@ -42,25 +42,26 @@ API ni persistencia.
 - La navegación se limitará a rutas o estados reales. Un elemento visual que no
   tenga comportamiento no se presentará como una función disponible.
 
-## 4. Decisiones técnicas pendientes de aprobación
+## 4. Dirección visual fijada (P2)
 
-Antes de implementar se deberá fijar:
+La identidad, navegación y composición quedan definidas en «Dirección visual y
+composición aprobada (P2)» de `spec.md`: nombre Radar Regen, paleta de carbón,
+lima, coral y verde azulado, tipografías Barlow Condensed / IBM Plex Sans / IBM
+Plex Mono con licencia OFL, cabecera horizontal con «Búsqueda» como única vista
+activa, filtros y resultados en dos columnas desde 1024 px, y tarjetas compactas
+sin vista de tabla. Las fuentes se servirán localmente y no se incorporarán
+dependencias ni recursos de marca no autorizados.
 
-- si los resultados se presentan únicamente como tarjetas o también con vista de
-  tabla;
-- el nombre definitivo de la herramienta, paleta y tipografía con licencia
-  compatible;
-- si la navegación lateral se mantiene visible en escritorio o se reduce a una
-  cabecera compacta;
-- la estrategia de test responsive compatible con la configuración actual de
-  Vitest/JSDOM;
-- si se necesitan nuevos componentes compartidos o basta con dividir el feature
+## 5. Decisiones técnicas pendientes
+
+- La estrategia de test responsive compatible con Vitest/JSDOM.
+- Si se necesitan nuevos componentes compartidos o basta con dividir el feature
   de regen.
 
 Estas decisiones no deben alterar el JSON ni añadir dependencias sin una nueva
 aprobación.
 
-## 5. Estrategia de pruebas
+## 6. Estrategia de pruebas
 
 - Componente de formulario: validación, payload exacto, limpieza y bloqueo
   durante carga.
