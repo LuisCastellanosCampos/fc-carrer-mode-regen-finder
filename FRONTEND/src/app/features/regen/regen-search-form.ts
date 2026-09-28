@@ -7,7 +7,7 @@ import {
   ValidationErrors,
   Validators
 } from '@angular/forms';
-import { RegenApiService, RegenMatch } from '../../core/regen-api.service';
+import { RegenApiService, RegenMatch, RegenSearchQuery } from '../../core/regen-api.service';
 
 function isoDateValidator(control: AbstractControl): ValidationErrors | null {
   const value = control.value as string;
@@ -35,6 +35,7 @@ export class RegenSearchForm {
   readonly status = signal<'idle' | 'loading' | 'success' | 'error'>('idle');
   readonly matches = signal<RegenMatch[]>([]);
   readonly message = signal<string | null>(null);
+  readonly submittedQuery = signal<RegenSearchQuery | null>(null);
 
   readonly searchForm = new FormGroup({
     birthDate: new FormControl('', {
@@ -52,6 +53,7 @@ export class RegenSearchForm {
     this.searchForm.reset();
     this.matches.set([]);
     this.message.set(null);
+    this.submittedQuery.set(null);
     this.status.set('idle');
   }
 
@@ -66,15 +68,17 @@ export class RegenSearchForm {
     }
 
     const { birthDate, nationality, position } = this.searchForm.getRawValue();
+    const query = {
+      birth_date: birthDate,
+      nationality: nationality.trim(),
+      position: position.trim() || null
+    };
+    this.submittedQuery.set(query);
     this.status.set('loading');
     this.message.set(null);
 
     this.regenApi
-      .search({
-        birth_date: birthDate,
-        nationality: nationality.trim(),
-        position: position.trim() || null
-      })
+      .search(query)
       .subscribe({
         next: (response) => {
           this.matches.set(response.matches);

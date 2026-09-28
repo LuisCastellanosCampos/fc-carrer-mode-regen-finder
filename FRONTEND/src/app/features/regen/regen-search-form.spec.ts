@@ -50,6 +50,25 @@ const responseWithMatches = {
         is_possible_regen: true,
         message: 'Posible regen: coinciden fecha de nacimiento y nacionalidad.'
       }
+    },
+    {
+      player: {
+        id: 'p-84',
+        name: 'Jugador Sin Posición',
+        birth_date: '1997-09-03',
+        nationality: 'Portugal',
+        position: 'CB',
+        overall: 84,
+        age: 21,
+        season: '2026'
+      },
+      match: {
+        birth_date: false,
+        nationality: false,
+        position: null,
+        is_possible_regen: false,
+        message: 'No coincide la fecha ni la nacionalidad y no hay posición para comparar.'
+      }
     }
   ],
   message: null
@@ -76,6 +95,17 @@ describe('RegenSearchForm T23', () => {
   });
 
   afterEach(() => httpTesting.verify());
+
+  it('announces the initial state and the criteria needed to start', () => {
+    const initialState = fixture.nativeElement.querySelector(
+      '.initial-state[role="status"]'
+    ) as HTMLElement;
+
+    expect(fixture.componentInstance.status()).toBe('idle');
+    expect(initialState.textContent).toContain('fecha de nacimiento');
+    expect(initialState.textContent).toContain('nacionalidad');
+    expect(initialState.textContent).toContain('posición');
+  });
 
   it('keeps field controls anchored when validation errors are shown', () => {
     const controls = fixture.componentInstance.searchForm.controls;
@@ -137,6 +167,9 @@ describe('RegenSearchForm T23', () => {
       .toBe('birth-date-error');
     expect(fixture.nativeElement.querySelector('#nationality')?.getAttribute('aria-invalid'))
       .toBe('true');
+    expect(fixture.nativeElement.querySelector('.validation-summary[role="alert"]')?.textContent)
+      .toContain('Revisa los campos');
+    expect(fixture.nativeElement.querySelector('.initial-state')).toBeNull();
   });
 
   it('sends only one request while a search is loading', () => {
@@ -208,11 +241,40 @@ describe('RegenSearchForm T23', () => {
     fixture.detectChanges();
 
     const cards = fixture.nativeElement.querySelectorAll('.match-card');
-    expect(cards.length).toBe(2);
-    expect(cards[0].textContent).toContain('Jugador Superior');
-    expect(cards[0].textContent).toContain('ST');
-    expect(cards[1].textContent).toContain('Jugador Segundo');
-    expect(cards[1].textContent).toContain('CM');
+    expect(cards.length).toBe(3);
+    expect(cards[0].querySelector('.player-name')?.textContent).toContain('Jugador Superior');
+    expect(cards[0].querySelector('.player-overall')?.textContent).toContain('90');
+    expect(cards[0].querySelector('.player-age')?.textContent).toContain('24');
+    expect(cards[0].querySelector('.player-position')?.textContent).toContain('ST');
+    expect(cards[0].querySelector('.player-nationality')?.textContent).toContain('Spain');
+    expect(cards[0].querySelector('.player-birth-date')?.textContent).toContain('1998-04-12');
+    expect(cards[0].querySelector('.player-season')?.textContent).toContain('2026');
+    expect(cards[0].querySelector('.match-message')?.textContent).toContain('Posible regen');
+    expect(cards[0].querySelector('.date-match')?.textContent).toContain('Coincide');
+    expect(cards[0].querySelector('.nationality-match')?.textContent).toContain('Coincide');
+    expect(cards[0].querySelector('.position-match')?.textContent).toContain('Coincide');
+
+    expect(cards[1].querySelector('.player-name')?.textContent).toContain('Jugador Segundo');
+    expect(cards[1].querySelector('.player-position')?.textContent).toContain('CM');
+    expect(cards[1].querySelector('.position-match')?.textContent).toContain('No coincide');
+
+    expect(cards[2].querySelector('.player-name')?.textContent).toContain('Jugador Sin Posición');
+    expect(cards[2].querySelector('.date-match')?.textContent).toContain('No coincide');
+    expect(cards[2].querySelector('.nationality-match')?.textContent).toContain('No coincide');
+    expect(cards[2].querySelector('.position-match')?.textContent).toContain('No informada');
+    expect(fixture.nativeElement.querySelector('.results-summary[role="status"]')).toBeTruthy();
+  });
+
+  it('summarizes the submitted criteria and number of matches', () => {
+    fixture.nativeElement.querySelector('.search-button').click();
+    httpTesting.expectOne((req) => req.url === '/api/v1/regens').flush(responseWithMatches);
+    fixture.detectChanges();
+
+    const summary = fixture.nativeElement.querySelector('.results-summary') as HTMLElement;
+    expect(summary.textContent).toContain('3');
+    expect(summary.textContent).toContain('1998-04-12');
+    expect(summary.textContent).toContain('Spain');
+    expect(summary.textContent).toContain('ST');
   });
 
   it('should show the API message when there are no matches', () => {
@@ -240,6 +302,34 @@ describe('RegenSearchForm T23', () => {
     expect(fixture.nativeElement.querySelector('.error-state')?.textContent).toContain(
       'No se pudo consultar el catálogo.'
     );
+  });
+
+  it('offers a retry after a recoverable error and keeps the search criteria', () => {
+    fixture.nativeElement.querySelector('.search-button').click();
+    httpTesting.expectOne((req) => req.url === '/api/v1/regens').flush('unavailable', {
+      status: 503,
+      statusText: 'Service Unavailable'
+    });
+    fixture.detectChanges();
+
+    const retryButton = fixture.nativeElement.querySelector('.retry-button') as HTMLButtonElement;
+    expect(retryButton).toBeTruthy();
+    retryButton.click();
+    fixture.detectChanges();
+
+    const retryRequest = httpTesting.expectOne((req) => req.url === '/api/v1/regens');
+    expect(retryRequest.request.params.get('birth_date')).toBe('1998-04-12');
+    expect(retryRequest.request.params.get('nationality')).toBe('Spain');
+    expect(retryRequest.request.params.get('position')).toBe('ST');
+    retryRequest.flush(responseWithMatches);
+    fixture.detectChanges();
+
+    expect(fixture.componentInstance.status()).toBe('success');
+    expect(fixture.componentInstance.searchForm.getRawValue()).toEqual({
+      birthDate: '1998-04-12',
+      nationality: 'Spain',
+      position: 'ST'
+    });
   });
 
   it('should show a Spanish error and preserve values after an HTTP 400', () => {
