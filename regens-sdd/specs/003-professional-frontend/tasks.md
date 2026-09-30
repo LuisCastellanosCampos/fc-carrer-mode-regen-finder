@@ -69,7 +69,7 @@ aprobarse la especificación y el plan de esta carpeta.
     una prueba confirma que el servicio conserva los nombres y valores del
     contrato `GET /api/v1/regens`.
 
-- [ ] **P11. Validar build y regresión**
+- [x] **P11. Validar build y regresión**
   - **PF:** PF-1 a PF-7
   - **Hecho cuando:** `npm test` y `npm run build` pasan, las pruebas existentes
     siguen verdes y no se ha modificado el backend ni el formato JSON.
