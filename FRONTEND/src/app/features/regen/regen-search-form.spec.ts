@@ -172,6 +172,19 @@ describe('RegenSearchForm T23', () => {
     expect(fixture.nativeElement.querySelector('.initial-state')).toBeNull();
   });
 
+  it('rejects an ISO-formatted date that is not a calendar date without requesting results', () => {
+    fixture.componentInstance.searchForm.controls.birthDate.setValue('2000-02-30');
+
+    fixture.componentInstance.onSubmit();
+    fixture.detectChanges();
+
+    expect(fixture.componentInstance.searchForm.controls.birthDate.invalid).toBe(true);
+    expect(fixture.nativeElement.querySelector('#birth-date-error')?.textContent).toContain(
+      'Introduce una fecha válida.'
+    );
+    httpTesting.expectNone((request) => request.url === '/api/v1/regens');
+  });
+
   it('sends only one request while a search is loading', () => {
     const component = fixture.componentInstance;
     component.onSubmit();
@@ -223,6 +236,25 @@ describe('RegenSearchForm T23', () => {
     expect(request.request.params.get('nationality')).toBe('Spain');
     expect(request.request.params.has('position')).toBe(false);
     request.flush({ query: {}, matches: [], message: 'No se encontraron posibles regens.' });
+  });
+
+  it('sends the complete search payload with trimmed values and no extra parameters', () => {
+    fixture.componentInstance.searchForm.setValue({
+      birthDate: '1998-04-12',
+      nationality: '  Spain  ',
+      position: '  ST  '
+    });
+
+    fixture.componentInstance.onSubmit();
+
+    const request = httpTesting.expectOne(
+      (req) => req.url === '/api/v1/regens' && req.method === 'GET'
+    );
+    expect(request.request.params.keys()).toEqual(['birth_date', 'nationality', 'position']);
+    expect(request.request.params.get('birth_date')).toBe('1998-04-12');
+    expect(request.request.params.get('nationality')).toBe('Spain');
+    expect(request.request.params.get('position')).toBe('ST');
+    request.flush(responseWithMatches);
   });
 
   it('should show a loading state while the request is pending', () => {
