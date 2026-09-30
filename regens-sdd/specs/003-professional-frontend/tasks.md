@@ -58,7 +58,7 @@ aprobarse la especificación y el plan de esta carpeta.
     foco visible, evita solapamientos y usa una identidad visual propia orientada
     a datos.
 
-- [ ] **P9. Añadir pruebas del feature**
+- [x] **P9. Añadir pruebas del feature**
   - **PF:** PF-2, PF-3, PF-4, PF-7
   - **Hecho cuando:** Hay tests para validación, payload, carga, error, vacío,
     limpieza, coincidencias con posición coincidente/no coincidente y reintento.
