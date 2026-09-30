@@ -107,6 +107,23 @@ describe('RegenSearchForm T23', () => {
     expect(initialState.textContent).toContain('posición');
   });
 
+  it('associates every search input with its visible label', () => {
+    const expectedLabels = new Map([
+      ['birth-date', 'Fecha de nacimiento'],
+      ['nationality', 'Nacionalidad'],
+      ['position', 'Posición (opcional)']
+    ]);
+
+    for (const [inputId, expectedLabel] of expectedLabels) {
+      const input = fixture.nativeElement.querySelector(`#${inputId}`) as HTMLInputElement;
+      const labels = Array.from(input.labels ?? []);
+
+      expect(labels.some((label) => label.contains(input))).toBe(true);
+      expect(labels.map((label) => label.querySelector('.field-label')?.textContent?.replace(/\s+/g, ' ').trim()))
+        .toContain(expectedLabel);
+    }
+  });
+
   it('keeps field controls anchored when validation errors are shown', () => {
     const controls = fixture.componentInstance.searchForm.controls;
     controls.birthDate.setValue('');

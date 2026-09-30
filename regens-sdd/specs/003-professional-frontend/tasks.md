@@ -63,7 +63,7 @@ aprobarse la especificación y el plan de esta carpeta.
   - **Hecho cuando:** Hay tests para validación, payload, carga, error, vacío,
     limpieza, coincidencias con posición coincidente/no coincidente y reintento.
 
-- [ ] **P10. Verificar accesibilidad y contrato**
+- [x] **P10. Verificar accesibilidad y contrato**
   - **PF:** PF-1, PF-3, PF-5, PF-7
   - **Hecho cuando:** Se comprueban labels, landmarks, roles, foco y teclado, y
     una prueba confirma que el servicio conserva los nombres y valores del
