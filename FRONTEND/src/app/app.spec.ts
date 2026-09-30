@@ -1,4 +1,5 @@
 import { provideHttpClient } from '@angular/common/http';
+import { By } from '@angular/platform-browser';
 import { TestBed } from '@angular/core/testing';
 import { App } from './app';
 import { RegenSearchForm } from './features/regen/regen-search-form';
@@ -43,6 +44,47 @@ describe('App', () => {
     expect(compiled.querySelector('nav[aria-label="Navegación principal"]')).toBeTruthy();
     expect(main).toBeTruthy();
     expect(main?.querySelector('h1')?.textContent).toContain('Encuentra el próximo regen');
+  });
+
+  it('should keep the skip target and search controls reachable in keyboard order', async () => {
+    const fixture = TestBed.createComponent(App);
+    await fixture.whenStable();
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+    const searchForm = fixture.debugElement.query(By.directive(RegenSearchForm))
+      .componentInstance as RegenSearchForm;
+    searchForm.searchForm.setValue({
+      birthDate: '1998-04-12',
+      nationality: 'Spain',
+      position: ''
+    });
+    fixture.detectChanges();
+
+    const skipLink = compiled.querySelector('.skip-link') as HTMLAnchorElement;
+    const main = compiled.querySelector('main#main-content') as HTMLElement;
+    const focusable = Array.from(
+      compiled.querySelectorAll<HTMLElement>('a[href], input:not([disabled]), button:not([disabled])')
+    );
+
+    expect(skipLink.getAttribute('href')).toBe('#main-content');
+    expect(main.tabIndex).toBe(-1);
+    expect(focusable[0]).toBe(skipLink);
+    expect(focusable.slice(1).map((element) => element.id || element.classList.item(0))).toEqual([
+      'nav-link',
+      'birth-date',
+      'nationality',
+      'position',
+      'search-button',
+      'clear-button'
+    ]);
+    expect(focusable.map((element) => element.tabIndex)).toEqual([0, 0, 0, 0, 0, 0, 0]);
+
+    document.body.append(fixture.nativeElement);
+    for (const element of focusable) {
+      element.focus();
+      expect(document.activeElement).toBe(element);
+    }
+    fixture.nativeElement.remove();
   });
 
   it('should load the responsive scouting styles with visible keyboard focus', async () => {
