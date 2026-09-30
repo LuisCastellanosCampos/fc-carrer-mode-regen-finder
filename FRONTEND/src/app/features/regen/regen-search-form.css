@@ -4,14 +4,21 @@
 
 .search-panel {
   box-sizing: border-box;
-  width: min(100%, 46rem);
+  width: min(100%, 88rem);
   max-width: 100%;
   margin: 0 auto;
-  padding: 2.5rem;
+  padding: clamp(1rem, 2vw, 2.5rem);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
   color: var(--color-ink, #172622);
   background: var(--color-surface, #ffffff);
   border: 1px solid var(--color-border, #d6ded8);
   border-radius: 4px;
+}
+
+.search-panel > * {
+  min-width: 0;
+  max-width: 100%;
 }
 
 .eyebrow {
@@ -24,10 +31,11 @@
 h1 {
   margin: 0;
   color: var(--color-ink, #172622);
-  font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+  font-family: var(--font-display, 'Barlow Condensed', 'Arial Narrow', sans-serif);
   font-size: 2.5rem;
   font-weight: 600;
   line-height: 1.05;
+  overflow-wrap: anywhere;
 }
 
 .intro {
@@ -207,6 +215,7 @@ button:disabled {
   color: var(--color-muted, #5c6a64);
   font-size: 0.875rem;
   text-align: right;
+  overflow-wrap: anywhere;
 }
 
 .results-list {
@@ -246,6 +255,7 @@ button:disabled {
   min-width: 0;
   color: var(--color-ink, #172622);
   font-size: 1.1rem;
+  overflow-wrap: anywhere;
 }
 
 .player-overall {
@@ -253,11 +263,11 @@ button:disabled {
   align-items: baseline;
   gap: 0.35rem;
   color: var(--color-teal, #357c73);
-  font-family: 'IBM Plex Mono', 'Consolas', monospace;
+  font-family: var(--font-data, 'IBM Plex Mono', 'Consolas', monospace);
 }
 
 .player-overall strong {
-  font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+  font-family: var(--font-display, 'Barlow Condensed', 'Arial Narrow', sans-serif);
   font-size: 1.75rem;
   line-height: 1;
 }
@@ -333,9 +343,48 @@ button:disabled {
   overflow-wrap: anywhere;
 }
 
+@media (min-width: 1024px) {
+  .search-panel {
+    grid-template-columns: minmax(16rem, 0.7fr) minmax(0, 1.3fr);
+    column-gap: 2rem;
+    row-gap: 0;
+  }
+
+  .eyebrow,
+  h1,
+  .intro {
+    grid-column: 1 / -1;
+  }
+
+  form,
+  .validation-summary {
+    grid-column: 1;
+  }
+
+  .results,
+  .initial-state,
+  .loading-state,
+  .empty-state,
+  .error-state {
+    grid-column: 2;
+  }
+
+  .results {
+    grid-row: 4 / span 2;
+    margin-top: 0;
+  }
+
+  .initial-state,
+  .loading-state,
+  .empty-state,
+  .error-state {
+    grid-row: 4;
+  }
+}
+
 @media (max-width: 700px) {
   .search-panel {
-    padding: 1.5rem 1rem;
+    padding: 1rem;
   }
 
   .results-summary {

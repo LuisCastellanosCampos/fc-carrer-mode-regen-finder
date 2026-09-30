@@ -1,21 +1,8 @@
 :host {
-	--color-canvas: #f2f5f1;
-	--color-surface: #ffffff;
-	--color-ink: #172622;
-	--color-muted: #5c6a64;
-	--color-border: #d6ded8;
-	--color-lime: #d8ed69;
-	--color-coral: #e6785b;
-	--color-teal: #357c73;
-	--color-danger: #b8423a;
-
 	display: block;
 	min-height: 100vh;
 	background: var(--color-canvas);
 	color: var(--color-ink);
-	font-family: 'IBM Plex Sans', 'Segoe UI', sans-serif;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
 }
 
 *,
@@ -59,7 +46,7 @@
 	align-items: baseline;
 	gap: 0.35rem;
 	color: var(--color-ink);
-	font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+	font-family: var(--font-display);
 	font-size: 1.6rem;
 	font-weight: 700;
 	line-height: 1;
@@ -90,7 +77,7 @@ nav {
 
 .nav-index {
 	color: var(--color-teal);
-	font-family: 'IBM Plex Mono', 'Consolas', monospace;
+	font-family: var(--font-data);
 	font-size: 0.72rem;
 }
 
