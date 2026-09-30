@@ -52,7 +52,7 @@ aprobarse la especificación y el plan de esta carpeta.
 
 ## Responsive, accesibilidad y pruebas
 
-- [ ] **P8. Aplicar tokens y estilos responsive**
+- [x] **P8. Aplicar tokens y estilos responsive**
   - **PF:** PF-5, PF-6
   - **Hecho cuando:** El layout funciona a 320 px, 768 px y 1440 px, mantiene
     foco visible, evita solapamientos y usa una identidad visual propia orientada

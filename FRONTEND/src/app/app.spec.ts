@@ -45,6 +45,21 @@ describe('App', () => {
     expect(main?.querySelector('h1')?.textContent).toContain('Encuentra el próximo regen');
   });
 
+  it('should load the responsive scouting styles with visible keyboard focus', async () => {
+    const fixture = TestBed.createComponent(App);
+    await fixture.whenStable();
+    fixture.detectChanges();
+    const loadedStyles = Array.from(document.querySelectorAll('style'))
+      .map((style) => style.textContent ?? '')
+      .join('\n');
+
+    expect(loadedStyles).toContain('--color-lime');
+    expect(loadedStyles).toContain('@media (min-width: 1024px)');
+    expect(loadedStyles).toContain('@media (max-width: 700px)');
+    expect(loadedStyles).toContain('grid-template-columns: minmax(16rem, 0.7fr) minmax(0, 1.3fr)');
+    expect(loadedStyles).toContain(':focus-visible');
+  });
+
   it('should render the regen search fields', async () => {
     const fixture = TestBed.createComponent(App);
     await fixture.whenStable();
