@@ -42,14 +42,12 @@ Pop-Location
 La aplicación estará disponible en `http://localhost:4200`. | The application
 will be available at `http://localhost:4200`.
 
-La API y el frontend se ejecutan actualmente en puertos distintos. El cliente
-Angular usa rutas relativas `/api`; la configuración del proxy local para
-redirigirlas a FastAPI está planificada en las tareas T24 y T25. Hasta
-completar esas tareas, la API puede probarse directamente en
-`http://127.0.0.1:8000`. | The API and frontend currently run on different ports.
-The Angular client uses relative `/api` routes; the local proxy configuration
-to forward them to FastAPI is planned in tasks T24 and T25. Until those tasks
-are complete, the API can be tested directly at `http://127.0.0.1:8000`.
+La API y el frontend se ejecutan en puertos distintos. Durante el desarrollo,
+Angular redirige las rutas `/api` a FastAPI mediante `FRONTEND/proxy.conf.json`.
+También puedes probar la API directamente en `http://127.0.0.1:8000`. | The
+API and frontend run on separate ports. During development, Angular forwards
+`/api` routes to FastAPI through `FRONTEND/proxy.conf.json`. You can also test
+the API directly at `http://127.0.0.1:8000`.
 
 Para actualizar el catálogo anual, realiza una petición `PUT` a
 `http://127.0.0.1:8000/api/v1/players/catalog` con el header
@@ -172,7 +170,8 @@ frontend tests from the project root:
 
 ```powershell
 Push-Location FRONTEND
-ng test --watch=false --no-progress
+npm test -- --watch=false
+npm run build
 Pop-Location
 ```
 
