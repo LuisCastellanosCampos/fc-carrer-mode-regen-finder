@@ -1,8 +1,6 @@
 # Tareas definitivas: integración del catálogo Sofifa
 
-Estas tareas consolidan las versiones previas `S1-S10` y `T28-T36`. Se eliminan los duplicados y se mantiene un único orden de ejecución para la fase posterior al MVP.
-
-- [ ] **T1. Aprobar el alcance de la fuente Sofifa**
+- [x] **T1. Aprobar el alcance de la fuente Sofifa**
   - **RF:** RF-1, RF-2
   - **Hecho cuando:** la especificación y el plan fijan la fuente anual única, la temporada soportada, el límite de extracción, el manejo de errores y que la API no consulta Sofifa en tiempo real ni se gestionan fuentes simultáneas.
 
