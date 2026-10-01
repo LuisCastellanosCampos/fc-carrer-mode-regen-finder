@@ -16,7 +16,7 @@
   - **RF:** RF-1, RF-2
   - **Hecho cuando:** un adaptador local ejecuta el scraper con temporada y límite configurables, guarda el artefacto original en `data/raw/<season>/` y devuelve errores controlados sin modificar el catálogo.
 
-- [ ] **T5. Implementar transformación y validación del artefacto**
+- [x] **T5. Implementar transformación y validación del artefacto**
   - **RF:** RF-1, RF-2
   - **Hecho cuando:** los registros válidos producen `Player` y los incompletos, inválidos, ambiguos o duplicados se rechazan antes de cualquier actualización del catálogo.
 
