@@ -8,7 +8,7 @@
   - **RF:** RF-1, RF-2
   - **Hecho cuando:** se documenta la versión o commit del scraper, sus dependencias `requests` y `parsel`, la licencia, los límites de páginas y el procedimiento reproducible sin credenciales ni cambios sin trazabilidad.
 
-- [ ] **T3. Definir el contrato de datos del scraper**
+- [x] **T3. Definir el contrato de datos del scraper**
   - **RF:** RF-1, RF-2
   - **Hecho cuando:** existe un contrato versionado para el formato de entrada (`json` o `csv`) y el mapeo explícito de `id`, `name`, `birth_date`, `nationality`, `position`, `overall`, `age` y `season` hacia `Player`, incluyendo campos ausentes, posiciones múltiples y fechas no interpretables.
 
