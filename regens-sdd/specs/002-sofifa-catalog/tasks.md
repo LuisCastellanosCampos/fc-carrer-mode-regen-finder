@@ -4,7 +4,7 @@
   - **RF:** RF-1, RF-2
   - **Hecho cuando:** la especificación y el plan fijan la fuente anual única, la temporada soportada, el límite de extracción, el manejo de errores y que la API no consulta Sofifa en tiempo real ni se gestionan fuentes simultáneas.
 
-- [ ] **T2. Fijar la versión y dependencias del scraper**
+- [x] **T2. Fijar la versión y dependencias del scraper**
   - **RF:** RF-1, RF-2
   - **Hecho cuando:** se documenta la versión o commit del scraper, sus dependencias `requests` y `parsel`, la licencia, los límites de páginas y el procedimiento reproducible sin credenciales ni cambios sin trazabilidad.
 
