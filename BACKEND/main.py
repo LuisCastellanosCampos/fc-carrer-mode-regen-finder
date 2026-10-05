@@ -6,7 +6,8 @@ from BACKEND.adapters.inbound.http.catalog import (
 	create_catalog_router,
 	create_regen_router,
 )
-from BACKEND.adapters.outbound.in_memory_catalog import InMemoryCatalog
+from BACKEND.adapters.outbound.sqlite_catalog import SQLiteCatalog
+from BACKEND.application.ports.catalog import CatalogPort
 from BACKEND.application.use_cases.find_regens import FindRegensService
 from BACKEND.application.use_cases.update_catalog import UpdateCatalogService
 from BACKEND.domain.exceptions.errors import (
@@ -16,8 +17,8 @@ from BACKEND.domain.exceptions.errors import (
 )
 
 
-def create_app(catalog: InMemoryCatalog | None = None) -> FastAPI:
-	catalog_adapter = catalog or InMemoryCatalog()
+def create_app(catalog: CatalogPort | None = None) -> FastAPI:
+	catalog_adapter = catalog or SQLiteCatalog()
 	app = FastAPI()
 
 	@app.exception_handler(RequestValidationError)

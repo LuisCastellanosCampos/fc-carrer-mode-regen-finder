@@ -7,9 +7,15 @@ Permite cruzar datos de fecha de nacimiento y nacionalidad para identificar las 
 Este proyecto se está creando bajo la metodología **Spec-Driven Development (SDD)** para reforzar mis conocimientos en desarrollo de software con inteligencia artificial. | This project is being developed under the **Spec-Driven Development (SDD)** methodology to strengthen my software development skills with artificial intelligence.
 
 # Tecnologías utilizadas | Technologies Used
-**Backend** | Python 3.12+, FastAPI, Uvicorn, Pydantic v2 |
+**Backend** | Python 3.12+, FastAPI, Uvicorn, SQLite, Pydantic v2 |
 **Frontend** | Angular, TypeScript, Reactive Forms, HttpClient |
 **Testing** | pytest, httpx, Vitest mediante Angular CLI |
+
+# Persistencia local del catálogo | Local Catalog Persistence
+
+La API usa SQLite como almacenamiento local del catálogo anual. La base se guarda en `data/catalog.db` por defecto y puede configurarse inyectando un adaptador `CatalogPort` o pasando una ruta distinta a `SQLiteCatalog(path=...)`.
+
+El adaptador mantiene el modelo `Player` completo (`id`, `name`, `birth_date`, `nationality`, `position`, `overall`, `age` y `season`) y reemplaza el contenido del catálogo de forma atómica, sin depender de FastAPI ni del scraper del catálogo.
 
 # Instalación y ejecución local | Installation and Local Execution
 
