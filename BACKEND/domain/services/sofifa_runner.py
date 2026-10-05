@@ -11,11 +11,13 @@ class SofifaRunner:
         self.output_dir = Path(output_dir)
 
     def run(self, *, season: str, page_limit: int, payload: str) -> list[dict]:
-        self._validate_season(season)
-        self._validate_page_limit(page_limit)
+        self.validate_request(season=season, page_limit=page_limit)
         self._validate_payload(payload)
 
-        records = json.loads(payload)
+        try:
+            records = json.loads(payload)
+        except json.JSONDecodeError as exc:
+            raise ValidationError("El payload del scraper no contiene JSON válido") from exc
         if not isinstance(records, list):
             raise ValidationError("El payload del scraper debe ser una lista JSON")
 
@@ -25,6 +27,11 @@ class SofifaRunner:
         artifact_path.write_text(payload, encoding="utf-8")
 
         return records
+
+    @classmethod
+    def validate_request(cls, *, season: str, page_limit: int) -> None:
+        cls._validate_season(season)
+        cls._validate_page_limit(page_limit)
 
     @staticmethod
     def _validate_season(season: str) -> None:

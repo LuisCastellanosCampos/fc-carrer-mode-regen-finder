@@ -38,3 +38,14 @@ def test_sofifa_runner_rejects_empty_payload() -> None:
 
     with pytest.raises(ValidationError, match="vacío"):
         runner.run(season="2026", page_limit=10, payload='[]')
+
+
+def test_sofifa_runner_reports_malformed_json_as_controlled_validation_error(
+    tmp_path: Path,
+) -> None:
+    runner = SofifaRunner(output_dir=tmp_path / "raw")
+
+    with pytest.raises(ValidationError, match="JSON"):
+        runner.run(season="2026", page_limit=10, payload="not-json")
+
+    assert not (tmp_path / "raw" / "2026" / "sofifa.json").exists()
