@@ -28,7 +28,7 @@
   - **RF:** RF-1, RF-2
   - **Hecho cuando:** la composición local usa SQLite en lugar de memoria, la importación valida la colección y la envía mediante el contrato existente, y la API consulta el catálogo persistido, no Sofifa.
 
-- [ ] **T8. Probar el pipeline, la validación y la persistencia**
+- [x] **T8. Probar el pipeline, la validación y la persistencia**
   - **RF:** RF-1, RF-2
   - **Hecho cuando:** hay tests para respuesta vacía, fallo de red, error HTTP, campos faltantes, fecha inválida, posiciones múltiples, IDs duplicados, importación fallida sin alterar el catálogo y recuperación tras recrear la aplicación.
 
