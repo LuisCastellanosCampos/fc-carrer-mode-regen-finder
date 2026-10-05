@@ -32,6 +32,6 @@
   - **RF:** RF-1, RF-2
   - **Hecho cuando:** hay tests para respuesta vacía, fallo de red, error HTTP, campos faltantes, fecha inválida, posiciones múltiples, IDs duplicados, importación fallida sin alterar el catálogo y recuperación tras recrear la aplicación.
 
-- [ ] **T9. Documentar la operación anual local**
+- [x] **T9. Documentar la operación anual local**
   - **RF:** RF-1, RF-2
   - **Hecho cuando:** el README explica cómo obtener el scraper fijado, instalar sus dependencias, ejecutarlo con límites responsables, revisar el artefacto en `data/raw/`, importar la temporada en `data/catalog.db` y repetir la operación sin duplicar datos; los artefactos generados y la base local quedan fuera de Git.

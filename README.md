@@ -17,6 +17,97 @@ La API usa SQLite como almacenamiento local del catálogo anual. La base se guar
 
 El adaptador mantiene el modelo `Player` completo (`id`, `name`, `birth_date`, `nationality`, `position`, `overall`, `age` y `season`) y reemplaza el contenido del catálogo de forma atómica, sin depender de FastAPI ni del scraper del catálogo.
 
+## Operación anual del catálogo Sofifa
+
+### Scraper fijado y entorno aislado
+
+La referencia documentada para la extracción es [`sagunsh/sofifa-scraper`](https://github.com/sagunsh/sofifa-scraper), fijado al commit completo `1d43a18eaddcf97933d8aa921fb1ea66b9d68c5f` (sin versión etiquetada). Ese commit publica licencia MIT y fija `requests==2.31.0` y `parsel==1.7.0` en `requirements.txt`. Comprueba el commit antes de actualizar la referencia; no uses la rama `master` móvil como versión.
+
+Desde PowerShell, clona el repositorio externo en una carpeta temporal y crea allí un entorno aislado. Ejecuta `git clone` solo la primera vez:
+
+```powershell
+$ScraperCommit = "1d43a18eaddcf97933d8aa921fb1ea66b9d68c5f"
+$ScraperDir = Join-Path $env:TEMP "sofifa-scraper-1d43a18"
+$VenvDir = Join-Path $env:TEMP "sofifa-scraper-venv"
+
+git clone https://github.com/sagunsh/sofifa-scraper.git $ScraperDir
+git -C $ScraperDir checkout --detach $ScraperCommit
+py -m venv $VenvDir
+$ScraperPython = Join-Path $VenvDir "Scripts\python.exe"
+& $ScraperPython -m pip install -r (Join-Path $ScraperDir "requirements.txt")
+```
+
+El CLI de ese commit acepta años de 2007 a 2024, no 2025 ni 2026. No etiquetes una extracción de 2024 como una temporada posterior. Limita cada ejecución a un máximo de 50 páginas y no repitas extracciones innecesariamente; el scraper espera entre páginas.
+
+### Extraer y revisar el artefacto original
+
+En este ejemplo se extrae el año 2024. El archivo se conserva sin editar en `data/raw/2024/sofifa.json`; el scraper también admite CSV si se usa una extensión `.csv`.
+
+```powershell
+$Season = "2024"
+$RawDir = Join-Path "data\raw" $Season
+$Artifact = Join-Path $RawDir "sofifa.json"
+
+New-Item -ItemType Directory -Force $RawDir | Out-Null
+& $ScraperPython (Join-Path $ScraperDir "scrape_sofifa.py") `
+    --year 2024 --max_pages 50 --filename $Artifact
+if ($LASTEXITCODE -ne 0) {
+    throw "Falló la extracción Sofifa; no importes el catálogo."
+}
+
+$Rows = Get-Content -Raw $Artifact | ConvertFrom-Json
+"Registros extraídos: $($Rows.Count)"
+$Rows | Select-Object -First 5 name, url, country, positions, overall, age |
+    Format-Table -AutoSize
+Get-FileHash $Artifact
+```
+
+Revisa el recuento, los campos, las fechas y el hash antes de importar. Una extracción vacía, incompleta o con datos inesperados se detiene y no se importa. El JSON externo no es directamente el cuerpo del endpoint: prepara una colección normalizada con `season`, `id`, `name`, `birth_date`, `nationality`, `position`, `overall` y `age`. Mapea `country` a `nationality` y `positions` a `position`; deriva el identificador estable del jugador y normaliza la fecha a `yyyy-MM-dd`. Rechaza campos ausentes, fechas inválidas, posiciones ambiguas e IDs repetidos.
+
+**Límite de integración:** el repositorio no incluye un comando de importación que ejecute el scraper y normalice automáticamente su JSON. `SofifaRunner` valida y guarda un payload JSON ya obtenido, y `SofifaTransformer` valida filas que ya usan el contrato normalizado. Por tanto, no envíes el artefacto upstream directamente al endpoint: primero debes preparar y revisar el JSON del contrato. Si no puedes mapear un campo de forma inequívoca, detén la importación.
+
+### Importar en SQLite y repetir con seguridad
+
+Inicia FastAPI desde la raíz. Por defecto, la API usa `data/catalog.db`; no hace falta iniciar Sofifa durante las búsquedas:
+
+```powershell
+py -m uvicorn BACKEND.main:app --reload
+```
+
+Prepara el JSON normalizado para el endpoint existente, por ejemplo en `data/catalog-import-2024.json` (reemplaza el ejemplo por todos los registros revisados):
+
+```json
+{
+  "season": "2024",
+  "players": [
+    {
+      "id": "p-1042",
+      "name": "Alejandro Ruiz",
+      "birth_date": "1998-04-12",
+      "nationality": "Spain",
+      "position": "ST",
+      "overall": 87,
+      "age": 24
+    }
+  ]
+}
+```
+
+En otra terminal desde la raíz, importa la colección con `PUT /api/v1/players/catalog`:
+
+```powershell
+curl.exe --fail-with-body -X PUT `
+    http://127.0.0.1:8000/api/v1/players/catalog `
+    -H "Content-Type: application/json" `
+    --data-binary "@data/catalog-import-2024.json"
+```
+
+Comprueba la respuesta `season`, `inserted` y `updated`. Si la validación falla o el servidor devuelve un error, no consideres completada la importación. Puedes verificar un jugador conocido consultando `GET /api/v1/regens` con su `birth_date` y `nationality`; SQLite conserva el catálogo al reiniciar la aplicación.
+
+Si repites la importación con los mismos IDs, el upsert no crea duplicados: la respuesta esperada es `inserted: 0` y `updated` igual al número de IDs que ya existían. Los IDs nuevos se informan en `inserted`. Una repetición no borra jugadores existentes que no estén en el payload.
+
+`data/` y `*.db` están excluidos de Git en `.gitignore`; por ello, el artefacto original, el JSON normalizado y `data/catalog.db` permanecen locales. No añadas esos ficheros al repositorio.
+
 # Instalación y ejecución local | Installation and Local Execution
 
 Desde la raíz del proyecto, instala las dependencias del backend: | From the project root, install the backend dependencies:
