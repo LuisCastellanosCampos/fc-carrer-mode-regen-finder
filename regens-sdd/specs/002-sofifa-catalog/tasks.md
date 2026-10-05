@@ -20,11 +20,11 @@
   - **RF:** RF-1, RF-2
   - **Hecho cuando:** los registros válidos producen `Player` y los incompletos, inválidos, ambiguos o duplicados se rechazan antes de cualquier actualización del catálogo.
 
-- [ ] **T6. Implementar la persistencia local con SQLite**
+- [x] **T6. Implementar la persistencia local con SQLite**
   - **RF:** RF-1, RF-2, RF-7
   - **Hecho cuando:** SQLite implementa `CatalogPort`, usa una ruta configurable, conserva los campos de `Player` y reemplaza los datos de forma atómica sin depender de FastAPI ni del scraper.
 
-- [ ] **T7. Conectar la API con el catálogo SQLite**
+- [x] **T7. Conectar la API con el catálogo SQLite**
   - **RF:** RF-1, RF-2
   - **Hecho cuando:** la composición local usa SQLite en lugar de memoria, la importación valida la colección y la envía mediante el contrato existente, y la API consulta el catálogo persistido, no Sofifa.
 

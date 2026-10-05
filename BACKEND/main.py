@@ -18,7 +18,7 @@ from BACKEND.domain.exceptions.errors import (
 
 
 def create_app(catalog: CatalogPort | None = None) -> FastAPI:
-	catalog_adapter = catalog or SQLiteCatalog()
+	catalog_adapter = catalog if catalog is not None else SQLiteCatalog()
 	app = FastAPI()
 
 	@app.exception_handler(RequestValidationError)
