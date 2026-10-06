@@ -9,10 +9,11 @@ def test_readme_explains_sofifa_catalog_update() -> None:
     gitignore = (ROOT / ".gitignore").read_text(encoding="utf-8")
 
     required_readme_content = (
-        "sagunsh/sofifa-scraper",
-        "Los datos obtenidos deben revisarse",
+        "jugadores_importables.csv",
+        "sin usar el scraper",
+        "py scripts/import_catalog.py",
+        "sofifa-scraper",
         "no convierte automáticamente",
-        "se actualiza enviando esos datos a la API",
         "data/catalog.db",
     )
     assert all(content in readme for content in required_readme_content)

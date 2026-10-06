@@ -16,17 +16,19 @@ Este proyecto se está creando bajo la metodología **Spec-Driven Development (S
 
 # Persistencia local del catálogo | Local Catalog Persistence
 
-La API usa SQLite para guardar el catálogo anual en `data/catalog.db`. | The API uses SQLite to store the yearly catalog in `data/catalog.db`.
-
-La API guarda el catálogo en SQLite y puede actualizarlo sin depender del scraper. | The API stores the catalog in SQLite and can update it without depending on the scraper.
+La API guarda el catálogo anual en `data/catalog.db` y puede actualizarlo sin depender del scraper. | The API stores the yearly catalog in `data/catalog.db` and can update it without depending on the scraper.
 
 ## Actualizar el catálogo Sofifa | Updating the Sofifa Catalog
 
-El proyecto usa [sofifa-scraper](https://github.com/sagunsh/sofifa-scraper) para obtener los datos de los jugadores. | The project uses [sofifa-scraper](https://github.com/sagunsh/sofifa-scraper) to get player data.
+Para probar el proyecto sin usar el scraper, puedes importar el CSV de ejemplo [jugadores_importables.csv](examples/jugadores_importables.csv). Con la API en marcha, ejecuta desde la raíz: | To try the project without the scraper, you can import the example CSV [jugadores_importables.csv](examples/jugadores_importables.csv). With the API running, run this from the project root:
 
-Los datos obtenidos deben revisarse y prepararse en el formato que espera la API. El proyecto no convierte automáticamente los datos del scraper. | The retrieved data must be checked and prepared in the format expected by the API. The project does not automatically convert the scraper data.
+```powershell
+py scripts/import_catalog.py
+```
 
-Después, el catálogo se actualiza enviando esos datos a la API, que los guarda en SQLite. | The catalog is then updated by sending that data to the API, which stores it in SQLite.
+El script envía el CSV a la API, que guarda el catálogo en SQLite. | The script sends the CSV to the API, which stores the catalog in SQLite.
+
+Si quieres obtener datos nuevos, puedes usar [sofifa-scraper](https://github.com/sagunsh/sofifa-scraper). El proyecto no convierte automáticamente sus datos al formato que espera la API. | To get new data, you can use [sofifa-scraper](https://github.com/sagunsh/sofifa-scraper). The project does not automatically convert its data to the format expected by the API.
 
 # Instalación y ejecución local | Installation and Local Execution
 
